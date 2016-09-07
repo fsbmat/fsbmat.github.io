@@ -1,12 +1,21 @@
 ---
-title: "Post 1"
+title: "Post1"
 author: "Fernando de Souza Bastos"
-date: "7 de setembro de 2016"
+date: "2016-09-07"
 layout: post
 comments: true
 output:
-  md_document:
-    variant: markdown_phpextra+backtick_code_blocks
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    number_sections: yes
+  html_document:
+    fig_caption: yes
+    force_captions: yes
+    highlight: pygments
+    number_sections: yes
+    theme: cerulean
+csl: mee.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -37,10 +46,7 @@ Além disso, estou tendo problemas com fórmulas feitas em latex, como por exemp
 F_{T}(t;\alpha,\beta)=P(T\leq t)=\Phi\left[\dfrac{1}{\alpha}\left(\sqrt{\frac{t}{\beta}}-\sqrt{\frac{\beta}{t}}\right)\right],\ t>0
 \end{equation}
 
-![center](_posts/images/fig1.png)
-
-Além disso, estou tendo problemas com fórmulas feitas em latex, como por
-exemplo:
+Além disso, estou tendo problemas com fórmulas feitas em latex, como por exemplo:
 
 $
 \begin{equation}
