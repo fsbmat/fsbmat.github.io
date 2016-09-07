@@ -38,3 +38,27 @@ exemplo:
 \begin{equation}
 F_{T}(t;\alpha,\beta)=P(T\leq t)=\Phi\left[\dfrac{1}{\alpha}\left(\sqrt{\frac{t}{\beta}}-\sqrt{\frac{\beta}{t}}\right)\right],\ t>0
 \end{equation}
+![center](_posts/images/fig1.png)
+
+Além disso, estou tendo problemas com fórmulas feitas em latex, como por
+exemplo:
+
+$
+\begin{equation}
+F_{T}(t;\alpha,\beta)=P(T\leq t)=\Phi\left[\dfrac{1}{\alpha}\left(\sqrt{\frac{t}{\beta}}-\sqrt{\frac{\beta}{t}}\right)\right],\ t>0
+\end{equation}
+$
+
+$$
+f(x;\\mu,\\sigma^2) = \\frac{1}{\\sigma\\sqrt{2\\pi}} 
+e^{ -\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2 }
+$$
+
+Equations {#equations}
+---------
+
+The deterministic part of the model is defined by this **in-line
+equation** as *μ*<sub>*i*</sub> = *β*<sub>0</sub> + *β*<sub>1</sub>*x*,
+and the stochastic part by the **centered equation**:
+
+$$ \\frac{1}{\\sqrt{2\\pi}\\sigma}e^{-(x-\\mu\_i)^2/(2\\sigma^2)} $$
