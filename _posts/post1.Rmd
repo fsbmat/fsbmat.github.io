@@ -2,7 +2,11 @@
 title: "Post 1"
 author: "Fernando de Souza Bastos"
 date: "7 de setembro de 2016"
-output: html_document
+layout: post
+comments: true
+output:
+  md_document:
+    variant: markdown_phpextra+backtick_code_blocks
 ---
 
 ```{r setup, include=FALSE}
