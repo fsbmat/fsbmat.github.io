@@ -29,8 +29,8 @@ navbar-links:
     - Dropbox: "https://www.dropbox.com"
     - Google Drive: "https://drive.google.com/drive/my-drive"
   Projetos: 
-    - Tese: "https://pt.sharelatex.com/login?redir=%2Fproject"
-    - Livro: "https://www.dropbox.com"
+    - Tese: ""
+    - Livro: ""
   Eventos:
     - MgEst:
     - SINAPE:
