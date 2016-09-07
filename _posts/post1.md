@@ -1,14 +1,3 @@
----
-title: "Post 1"
-author: "Fernando de Souza Bastos"
-date: "7 de setembro de 2016"
-layout: post
-comments: true
-output:
-  html_document:
-    variant: markdown_phpextra+backtick_code_blocks
----
-
 R Markdown {#r-markdown}
 ----------
 
