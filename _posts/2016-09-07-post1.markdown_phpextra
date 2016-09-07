@@ -1,14 +1,3 @@
----
-title: "Post1"
-author: "Fernando de Souza Bastos"
-date: "2016-09-07"
-layout: post
-comments: true
-output:
-  md_document:
-    variant: markdown_phpextra+backtick_code_blocks
----
-
 R Markdown {#r-markdown}
 ----------
 
@@ -40,7 +29,8 @@ O gráfico abaixo não aparece:
 ``` r
 plot(pressure)
 ```
-![center](D:/Documentos/GitHub/webpage/fsbmat.github.io/img/fig1.png)
+
+![center](/img/fig1.png)
 
 Além disso, estou tendo problemas com fórmulas feitas em latex, como por
 exemplo:
