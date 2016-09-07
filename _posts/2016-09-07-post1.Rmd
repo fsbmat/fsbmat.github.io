@@ -21,10 +21,14 @@ summary(cars)
 
 ## Including Plots
 
-You can also embed plots, for example:
+O gráfico abaixo não aparece:
 
-```{r pressure, echo=FALSE}
+```{r pressure, echo=TRUE}
 plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Além disso, estou tendo problemas com fórmulas feitas em latex, como por exemplo:
+
+\begin{equation}
+F_{T}(t;\alpha,\beta)=P(T\leq t)=\Phi\left[\dfrac{1}{\alpha}\left(\sqrt{\frac{t}{\beta}}-\sqrt{\frac{\beta}{t}}\right)\right],\ t>0
+\end{equation}
