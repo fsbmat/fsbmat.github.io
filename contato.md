@@ -1,6 +1,7 @@
 ---
-title: Fernando Bastos
-subtitle: Contato
+layout: page
+title: Contatos
+subtitle: Meus contatos
 ---
 
 **Endereço:** Florestal - Minas Gerais - Brasil 
