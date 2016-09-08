@@ -37,6 +37,7 @@ navbar-links:
     - SINAPE:
     - Escola de Regressão:
   Links: ""
+  Contato: "Contatos"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
