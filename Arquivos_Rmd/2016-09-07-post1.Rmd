@@ -1,0 +1,61 @@
+---
+title: "Post1"
+author: "Fernando de Souza Bastos"
+date: '2016-09-07'
+output:
+  html_document:
+    fig_caption: yes
+    force_captions: yes
+    highlight: pygments
+    number_sections: yes
+    theme: cerulean
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    number_sections: yes
+layout: post
+csl: mee.csl
+comments: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+O gráfico abaixo não aparece:
+
+```{r pressure, echo=TRUE}
+plot(pressure)
+```
+
+Além disso, estou tendo problemas com fórmulas feitas em latex, como por exemplo:
+
+\begin{equation}
+F_{T}(t;\alpha,\beta)=P(T\leq t)=\Phi\left[\dfrac{1}{\alpha}\left(\sqrt{\frac{t}{\beta}}-\sqrt{\frac{\beta}{t}}\right)\right],\ t>0
+\end{equation}
+
+Além disso, estou tendo problemas com fórmulas feitas em latex, como por exemplo:
+
+$$
+f(x;\mu,\sigma^2) = \frac{1}{\sigma\sqrt{2\pi}} 
+e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
+$$
+
+## Equations
+
+The deterministic part of the model is defined by this **in-line equation** as 
+$\mu_i = \beta_0 + \beta_1x$, and the stochastic part by the **centered equation**: 
+
+$$ \frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu_i)^2/(2\sigma^2)} $$
