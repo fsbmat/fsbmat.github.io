@@ -1,5 +1,5 @@
 # --- General options --- #
-encoding: UTF-8
+#encoding: UTF-8
 # url is the full website URL
 # baseurl is the website's URL without the hostname
 
@@ -14,7 +14,7 @@ baseurl: ""
 # Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
-title: Meu Blog
+title: Fernando Bastos Blog
 
 # Short description of your site
 description: Página para divulgar idéias e interesses pessoais!
@@ -95,8 +95,11 @@ url-pretty: "Minha página pessoal"  # eg. "deanattali.com/beautiful-jekyll"
 timezone: "America/Vancouver"
 markdown: kramdown
 highlighter: rouge
-permalink: /:year-:month-:day-:title/
+#permalink: /:year-:month-:day-:title/
+permalink: /blog/:title/
 paginate: 5
+paginate_path: "/page:num/"
+
 
 kramdown:
   input: GFM
