@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Contatos
+title: Contato
 subtitle: Meus contatos
 ---
 
