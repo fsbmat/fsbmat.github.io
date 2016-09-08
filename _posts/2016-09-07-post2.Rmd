@@ -22,6 +22,7 @@ author: Fernando de Souza Bastos - Doutorando em Estatística (UFMG)
 ```{r,echo = FALSE}
 options(OutDec=",")
 ```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
