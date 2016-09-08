@@ -24,7 +24,8 @@ description: Página para divulgar idéias e interesses pessoais!
 # List of links in the navigation bar
 navbar-links:
   Lattes: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4164030D3"
-  Resources:
+  Blog: "blog"
+  Recursos:
     - ShareLatex: "https://pt.sharelatex.com/login?redir=%2Fproject"
     - Dropbox: "https://www.dropbox.com"
     - Google Drive: "https://drive.google.com/drive/my-drive"
