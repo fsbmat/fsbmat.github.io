@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Introdução a Estimação e Modelagem no R com o Uso da Distribuição Birnbaum-Saunders"
 author: "Fernando de Souza Bastos - Doutorando em Estatística (UFMG)"
 date: '2016-09-07'
@@ -20,9 +21,9 @@ output:
     fig_caption: yes
     keep_tex: yes
     number_sections: yes
-layout: post
 csl: mee.csl
 comments: yes
+tags: [Distribuição Birnbaum-Saunders, Monte Carlo, otimização, R]
 ---
 
 ```{r,echo = FALSE}
