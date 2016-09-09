@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Fernando Bastos
-subtitle: Blog
+title: Blog
+subtitle: Meus interesses compartilhados!
 ---
 
 ***
