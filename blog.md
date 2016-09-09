@@ -20,7 +20,7 @@ Neste post irei escrever e exemplificar o uso de latex e rmarkdown. [[Leia mais]
 ***
 
 <center><font size="6" color="#76asaf">
-<a href="/blog_posts/07-09-2016/post1">
+<a href="/blog_posts/07-09-2016/post2">
 <b>Segundo post do Blog</b>
 </a></font></center>
 
