@@ -17,11 +17,11 @@ output:
     code_folding: hide
     #Diversos modelos de documentos ver outros em http://bootswatch.com/
     theme: united
-  pdf_document:
-    fig_caption: yes
-    keep_tex: yes
-    number_sections: yes
-csl: mee.csl
+bibliography: bibfile.bib    
+#  pdf_document:
+#    fig_caption: yes
+#    keep_tex: yes
+#    number_sections: yes
 comments: yes
 tags: [Distribuição Birnbaum-Saunders, Monte Carlo, otimização, R]
 ---
@@ -37,10 +37,10 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introdução
 
 <p style="text-align: justify;">
-Neste post é utilizada a distribuição Birnbaum-Saunders para ilustrar alguns conceitos de métodos computacionais em Inferência Estatística.  Essa distribuição foi proposta por Birnbaum e Saunders (1969), no artigo intitulado __A new family of life distributions__ e é, comumente, considerado na modelagem de tempo de vida de materiais e equipamentos sujeitos a cargas dinâmicas através de modelos de dano acumulado. Sendo, amplamente, utilizada na área de engenharia, na indústria, em negócios, na análise de confiabilidade, na análise de sobrevivência, em ciências ambientais e ciências médicas e em diversas outras áreas, pois possui propriedades interessantes e uma relação próxima com a distribuição normal, o que a torna, do ponto de vista de aplicação, uma alternativa mais atraente para as bem conhecidas distribuições Weibull, log-logística, log-normal, gama e modelos inversos Gaussianos. 
+Neste post é utilizada a distribuição Birnbaum-Saunders para ilustrar alguns conceitos de métodos computacionais em Inferência Estatística. Essa distribuição foi proposta por Birnbaum e Saunders (1969), no artigo intitulado __A new family of life distributions__ e é, comumente, considerado na modelagem de tempo de vida de materiais e equipamentos sujeitos a cargas dinâmicas através de modelos de dano acumulado. Sendo, amplamente, utilizada na área de engenharia, na indústria, em negócios, na análise de confiabilidade, na análise de sobrevivência, em ciências ambientais e ciências médicas e em diversas outras áreas, pois possui propriedades interessantes e uma relação próxima com a distribuição normal, o que a torna, do ponto de vista de aplicação, uma alternativa mais atraente para as bem conhecidas distribuições Weibull, log-logística, log-normal, gama e modelos inversos Gaussianos, para mais informações ver @birnbaum1969new, @dos2010estimaccao, @Romeiro2014 e @SanchezBenites. 
 </p>
 <p style="text-align: justify;">
-Além do contexto inferencial, é discutido algumas observações sobre questões numéricas quando trabalha-se com a função de verossimilhança na perspectiva computacional fazendo uso do software `R`. 
+Além do contexto inferencial, é discutido algumas observações sobre questões numéricas quando trabalha-se com a função de verossimilhança na perspectiva computacional fazendo uso do software `R`, para mais informações ver @barros2009r. 
 </p>
 
 ##Função de Distribuição Acumulada Birnbaum-Saunders 
@@ -811,27 +811,9 @@ curve(expr = dnorm(x,mean=mean(m1[,4]),sd=sd(m1[,4])),add=T, col="red")
 
 ```
 
+#Mensagem Final e Agradecimento
 
-
-#Referências
-
-1-Z.W. Birnbaum & S.C. Saunders. A new family of life distribuitions. Journal 
-of Applied Probability, 6 (1969), 319-327.
-
-2-B.S, Luis Enrique, Modelos Birnbaum-Saunders bivariados – Campinas, SP:
-[s.n.], 2014.
-
-3-S.N, Manoel Ferreira, Estimação e Modelagem com a distribuição Birnbaum-Saunders: Uma nova reparametrização - Recife, PE, 2010.
-
-4-Barros, M., Paula, G. A., Leiva, V. (2009). An R implementation for generalized
-Birnbaum-Saunders distributions. Computational Statistics and Data Analysis, 53(5),
-1511-1528.
-
-###############################################################################
-
-*Mensagem Final e Agradecimento
-
-Agradeço ao Rumenick Pereira pela valiosa ajuda na confecção desta apresentação e na confecção dos scripts do ´R´, sem a qual esta apresentação não ficaria tão completa! Muito obrigado!
+Agradeço ao Rumenick Pereira pela valiosa ajuda na confecção desta apresentação e também agradeço aos organizadores do Stats4Good pela oportunidade e pelo incentivo ao grupo! De acordo com Mario Sergio Cortella: 
 
 "Há três caminhos para o sucesso:
 
@@ -841,4 +823,6 @@ Agradeço ao Rumenick Pereira pela valiosa ajuda na confecção desta apresenta�
 
 3- Perguntar o que se ignora - Humildade Intelectual"
 
-    *Mario Sergio Cortella
+    
+#Referências 
+
