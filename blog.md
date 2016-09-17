@@ -8,7 +8,7 @@ subtitle: Meus interesses compartilhados!
 
 <center><font size="6" color="#76asaf">
 <a href="/blog_posts/07-09-2016/post1">
-<b>Segundo post do Blog</b>
+<b>Primeiro post do Blog</b>
 </a></font></center>
 
 ***
