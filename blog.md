@@ -28,6 +28,6 @@ Neste post irei escrever e exemplificar o uso da Birnbaum. [[Leia mais]](/blog_p
 
 **17-07-2016 - Fernando de Souza Bastos:**
 
-Neste post irei escrever e exemplificar o uso da Birnbaum. [[Leia mais]](/blog_posts/17-09-2016/post2)
+Neste post faço uma análise de um banco de dados do Datasus e apresento o perfil de jovens assassinados em Minas Gerais no ano de 2013. [[Leia mais]](/blog_posts/17-09-2016/post2)
 
 
