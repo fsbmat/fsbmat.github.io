@@ -1,0 +1,497 @@
+%  The AAU Poster Theme.
+%  2013-05-08 v. 1.1.0
+%  Copyright 2013 by Jesper Kjær Nielsen <jkn@es.aau.dk>
+%
+%  This is free software: you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  This is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details.
+%
+%  You can find the GNU General Public License at <http://www.gnu.org/licenses/>.
+\documentclass[a0paper,portrait]{baposter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Language, Encoding and Fonts
+% http://en.wikibooks.org/wiki/LaTeX/Internationalization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Select encoding of your inputs. Depends on
+% your operating system and its default input
+% encoding. Typically, you should use
+%   Linux  : utf8 (most modern Linux distributions)
+%            latin1 
+%   Windows: ansinew
+%            latin1 (works in most cases)
+%   Mac    : applemac
+% Notice that you can manually change the input
+% encoding of your files by selecting "save as"
+% an select the desired input encoding. 
+\usepackage[latin1]{inputenc}
+% Make latex understand and use the typographic
+% rules of the language used in the document.
+\usepackage[brazil]{babel}
+% Use the vector font Latin Modern which is going
+% to be the default font in latex in the future.
+\usepackage{helvet}
+% Change the default font family from roman to sans serif
+\renewcommand{\familydefault}{\sfdefault} % for text
+\usepackage[helvet]{sfmath} % for math
+% Choose the font encoding
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphics and Tables
+% http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% http://en.wikibooks.org/wiki/LaTeX/Tables
+% http://pgfplots.sourceforge.net/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You cannot use floats in the baposter theme.
+% We therefore load the caption package which provides
+% the command \captionof
+% Set up how figure and table captions are displayed
+\usepackage{caption}
+\captionsetup{
+  font=small,% set font size to footnotesize
+  labelfont=bf % bold label (e.g., Figure 3.2) font
+}
+% Make the standard latex tables look so much better
+\usepackage{array,booktabs}
+% For creating beautiful plots
+\usepackage{pgfplots}
+%\usepackage{Sweave}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mathematics
+% http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines new environments such as equation,
+% align and split 
+\usepackage{amsmath}
+% Adds new math symbols
+\usepackage{amssymb}
+\usepackage{multirow}
+%\usepackage{graphicx}
+%\usepackage{subfig}
+%\usepackage{figure}
+\usepackage{subfigure}
+%\usepackage{float}
+\usepackage{natbib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Colours
+% http://en.wikibooks.org/wiki/LaTeX/Colors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\selectcolormodel{RGB}
+% define the three aau colors
+\definecolor{aaublue1}{RGB}{33,26,82}% dark blue
+\definecolor{aaublue2}{RGB}{113,109,143} % light blue
+\definecolor{aaublue3}{RGB}{194,193,204} % lighter blue
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lists
+% http://en.wikibooks.org/wiki/LaTeX/List_Structures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Easier configuration of lists
+\usepackage{enumitem}
+%configure itemize
+\setlist{%
+  topsep=0pt,% set space before and after list
+  noitemsep,% remove space between items
+  labelindent=\parindent,% set the label indentation to the paragraph indentation
+  leftmargin=*,% remove the left margin
+  font=\color{aaublue1}\normalfont, %set the colour of all bullets, numbers and descriptions to aaublue1
+}
+% use set<itemize,enumerate,description> if you have an older latex distribution
+\setitemize[1]{label={\raise1.25pt\hbox{$\blacktriangleright$}}}
+\setitemize[2]{label={\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}}
+\setitemize[3]{label={\raise1.25pt\hbox{$\star$}}}
+\setitemize[4]{label={-}}
+%\setenumerate[1]{label={\theenumi.}}
+%\setenumerate[2]{label={(\theenumii)}}
+%\setenumerate[3]{label={\theenumiii.}}
+%\setenumerate[4]{label={\theenumiv.}}
+%\setdescription{font=\color{aaublue1}\normalfont\bfseries}
+
+% use setlist[<itemize,enumerate,description>,<level>] if you have a newer latex distribution
+%\setlist[itemize,1]{label={\raise1.25pt\hbox{$\blacktriangleright$}}}
+%\setlist[itemize,2]{label={\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}}
+%\setlist[itemize,3]{label={\raise1.25pt\hbox{$\star$}}}
+%\setlist[itemize,4]{label={-}}
+%\setlist[enumerate,1]{label={\theenumi.}}
+%\setlist[enumerate,2]{label={(\theenumii)}}
+%\setlist[enumerate,3]{label={\theenumiii.}}
+%\setlist[enumerate,4]{label={\theenumiv.}}
+%\setlist[description]{font=\color{aaublue1}\normalfont\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Misc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% change/remove some names
+\addto{\captionsenglish}{
+  %remove the title of the bibliograhpy
+	\renewcommand{\refname}{\vspace{-0.7em}}
+  %change Figure to Fig. in figure captions
+  \renewcommand{\figurename}{Fig.}
+}
+% create links
+\usepackage{url}
+%note that the hyperref package is currently incompatible with the baposter class
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\alert}[1]{{\color{aaublue1}#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Start 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some changes that cannot be made in the preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% set the background of the poster
+\background{
+  \begin{tikzpicture}[remember picture,overlay]%
+    %the poster background color
+    \fill[fill=aaublue3] (current page.north west) rectangle (current page.south east);
+    %the header
+    \fill [fill=aaublue1] (current page.north west) rectangle ([yshift=-\headerheight] current page.north east);
+  \end{tikzpicture}
+}
+% if you want to reduce the space before and after equations, use and adjust
+% the following lines
+%\addtolength{\abovedisplayskip}{-2mm}
+%\addtolength{\belowdisplayskip}{-2mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% General poster setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{poster}{
+  %general options for the poster
+  grid=false,
+  columns=3,
+%  colspacing=4.2mm,
+  headerheight=0.1\textheight,
+  background=user,
+%  bgColorOne=red!42, %is used when background != user and none
+%  bgColortwo=green!42, %is used when background is shaded
+  eyecatcher=true,
+  %posterbox options
+  headerborder=closed,
+  borderColor=aaublue1,
+  headershape=rectangle,
+  headershade=plain,
+  headerColorOne=aaublue1,
+%  headerColortwo=yellow!42, %is used when the header background is shaded
+  textborder=rectangle,
+  boxshade=plain,
+  boxColorOne=white,
+%  boxColorTwo=cyan!42,%is used when the text background is shaded
+  headerFontColor=white,
+  headerfont=\Large\sf\bf,
+  linewidth=1pt
+}
+%the Eye Catcher (the logo on the left)
+{
+  %this can be commented out or replaced by a company/department logo
+  \includegraphics[height=0.75\headerheight]{Figuras/fapemig}
+}
+%the poster title
+{\color{white}\bf
+{\small Perfil dos jovens de 15 a 17 anos assassinados em Minas Gerais no ano de 2013}\\
+{\small Estudo via Regressão Logística}
+}
+%the author(s)
+{\color{white}\small
+  \vspace{1em} Fernando de Souza Bastos\\[0.5em]
+  Doutorando em Estatística, Universidade Federal de Minas Gerais\\
+  fsbmat@gmail.com
+}
+%the logo (the logo on the right)
+{
+  %this can be commented out or replaced by a company/department logo
+  \includegraphics[height=0.8\headerheight]{Figuras/UFMG3}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the actual content of the poster begins here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{posterbox}[name=Resumo,column=0,row=0]{Resumo}
+O objetivo deste trabalho é analisar o perfil dos jovens assassinados em Minas Gerais no ano de
+2013 via regressão logística binária. Os dados analisados foram coletados pelo DATASUS e
+divulgados via Sistema de Informação de Mortalidade (SIM), disponibilizado pelo Ministério da
+Saúde através da Fundação Nacional de Saúde. Após o ajuste do modelo estimou-se que um
+jovem de 17 anos, do sexo masculino, solteiro, de cor negra e com nenhuma escolaridade tem
+72,19\% de probabilidade de ter sido assassinado, dado que está morto. Para o ajuste e análise
+do modelo foi utilizado o software R, \cite{softwareR}. 
+\end{posterbox}
+
+\begin{posterbox}[name=Metodologia,column=0,below=Resumo]{Metodologia}
+
+A fonte de informação primária da base de dados são os atestados de óbito emitidos pelos cartórios civis. Esta contém informações sobre a data do óbito, idade, sexo, estado civil, local de ocorrência, causa de mortalidade, município de residência, ocupação e escolaridade. Apesar da enorme quantidade de informações, o banco de dados apresenta problemas sérios de preenchimento de algumas variáveis como educação, estado civil, ocupação, entre outras, que dificultam o seu uso. Os valores não preenchidos foram retirados do estudo. A causa de mortalidade no banco de dados está codificada segundo a Classificação Internacional de Doenças
+através da CID10.
+
+Foram coletados os dados de 5.418 jovens de 15 a 17 anos que morreram no ano de 2013 no estado de Minas Gerais, para a análise 
+de regressão logística foram retirados 62 indivíduos (aproximadamente 1,15\% dos dados) por não terem todas as informações completas e por terem informações cuja
+categoria era caracterizada como ``ignorado'' no banco de dados. Dessa forma, restaram 5356 indivíduos para análise.
+
+As descrições das codificações estão na tabela abaixo:
+\vspace{0.25cm}
+\begin{center}
+\begin{tabular}{c|c|c}
+\hline \hline
+Variáveis             & Categorias &  Descrição \\
+\hline \hline
+\multirow{2}{*}{Y}    &  0&  Não homicídio\\
+                      &  1&  homicídio\\
+											\hline
+\multirow{2}{*}{S}    &  1&  Masculino\\
+                      &  2&  Feminino\\
+											\hline
+\multirow{4}{*}{R}    &  1&  R/C Branca\\
+                      &  2&  R/C Negra\\
+                      &  4&  R/C Parda\\
+                      &  5&  R/C Indígena\\
+											\hline
+\multirow{5}{*}{ESC}  &  1&  Nenhum \\
+                      &  2&  1 a 3 anos\\
+                      &  3&  4 a 7 anos\\
+                      &  4&  8 a 11 anos\\
+                      &  5&  $\geq$ 12 anos\\
+											\hline
+					I           & Idade (Cont.) &15 a 17 anos \\
+					\hline
+			\hline
+\end{tabular}
+\captionof{table}{Variáveis consideradas no estudo com suas respectivas categorias}
+\label{tab:tab1}
+\end{center}
+
+Como havia poucos indivíduos na categoria distinta de solteiro para a variável estado civil, foram considerados
+somente indivíduos solteiros na análise. Não houve nenhum indivíduo de 15 a 17 anos caracterizado com a raça/cor amarela.
+\vspace{0.25cm}
+
+\end{posterbox}
+
+%\begin{posterbox}[name=lists,column=0,below=Metodologia]{Continuação}
+%
+%\end{posterbox}
+
+%\begin{posterbox}[name=equation,column=0,below=Metodologia,above=bottom]{Equations}
+%\begin{equation}
+  %f_X(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{\frac{1}{2\sigma^2}(x-\mu)^2\right\}
+%\end{equation}
+%\end{posterbox}
+
+%\begin{posterbox}[name=install,span=2,column=1,row=0]{Installation}
+%\begin{posterbox}[name=install,column=1,row=0]{Estatística Descritiva}
+%Na figura $\ref{fig1}$ temos a proporção de pessoas assassinadas por idade, dos 10 aos 60 anos. Note que o número de homicídios aumenta até os 17 anos 
+%e a partir dai começa a diminuir lentamente, haja visto que a morte por assassinato dos 15 aos 17 anos é superior a morte causada por outras causas, como 
+%pode ser verificado na figura $\ref{fig2}$.
+%
+%\begin{center}
+  %\includegraphics[width=5cm]{Figuras/fig1}
+  %\captionof{figure}{Proporção por idade de pessoas, entre 10 e 60 anos, que morreram em 2013 no Estado de Minas Gerais.}
+  %\label{fig1}
+%\end{center}
+%
+%\begin{center}
+  %\includegraphics[width=5cm]{Figuras/fig2}
+  %\captionof{figure}{Número de jovens de 15 a 17 anos assassinados em 2013 no Estado de Minas Gerais.}
+  %\label{fig2}
+%\end{center}
+%
+%\end{posterbox}
+
+\begin{posterbox}[name=Continuacao,column=1,row=0]{}
+
+Como a variável resposta é binária (0 ou 1), considerou-se a distribuição binomial como componente aleatório. O componente sistemático é dado pela combinação linear das variáveis explicativas e para função de ligação considerou-se as funções: logit, probit, complemento log-log e cauchit. Após a descrição e exploração dos dados foi feita a seleção das variáveis que melhor explicam a variável dependente. A seleção foi realizada pelo algoritmo \textit{stepwise} considerando como critério de seleção o AIC (Critério de Informação de Akaike). Considerou-se como modelo completo o modelo aditivo com todos
+os efeitos principais e todas as interações. 
+
+Os modelos especificados com as diferentes funções de ligação apresentaram um comportamento muito parecido. Todos os gráficos de resíduos simulados apresentaram resíduos dentro dos intervalos simulados. Em relação ao \textit{AIC}, \textit{Deviance}, \textit{pseudo}-$R^{2}$ e curva \textit{ROC}, todos tiveram desempenho semelhante. Em relação ao teste de \textit{Hosmer-Lemeshow} e de \textit{Pearson} somente o modelo \textit{Clog-log} não foi adequado. Logo, pela magnitude das medidas comparativas e pela vantagem interpretativa da especificação \textit{logit}, esta foi a função de ligação considerada para o ajuste e análise. Para maiores informações sobre regressão logística binária sugere-se \cite{bilder2014analysis}, \cite{dobson2008introduction}, \cite{hosmer81lemeshow} e \cite{paula2004modelos}.
+
+%A construção iniciou-se com a análise uni\-va\-ria\-da das variáveis explicativas. Para saber se a variável analisada era significativa ou não, foi realizado um teste baseado na estatística G para a deviance. Todas as variáveis tiveram p-valor inferior a 0.05 e portanto foram selecionadas para a análise multivariada. Em seguida, foi realizada a análise individual dos dados e todos os modelos possíveis, com e sem interação, foram avaliados. Para maiores informações sobre regressão logística binária sugere-se \cite{bilder2014analysis}, \cite{dobson2008introduction}, \cite{hosmer81lemeshow} e \cite{paula2004modelos}.
+%
+%O melhor modelo foi aquele que, além de estar bem ajustado, foi o mais simples, ou seja, possuía menos variável não significativa, além de possuir deviance mais próxima do número de graus de liberdade e menor AIC. Utilizou-se ainda o teste de ajuste do Qui-quadrado de Pe\-ar\-son e o de Hosmer-Lemeshow, ver 
+%\cite{hosmer81lemeshow} para maiores detalhes. 
+%
+%O p-valor do teste do qui-quadrado de Pearson foi 0.415 e do teste de Hosmer-Lemeshow 0.111, sendo assim, os dois testes consideram o 
+%modelo que foi selecionado adequado para análise dos dados. 
+
+
+\end{posterbox}
+
+\begin{posterbox}[name=problems,column=1,below=Continuacao]{Modelo Ajustado}
+\vspace{-0.3cm}
+  %$$\tiny Y \sim S + R + ESC + I, family = binomial(link = logit).$$ 
+	\begin{equation*}
+  \begin{gathered}
+    Y_i \sim Binomial (n, \widehat{\pi_i})\\
+    g(\widehat{\pi_i}) = \widehat{\beta_{0}} +
+    \widehat{\beta_{1}}S_{i} + \widehat{\beta_{2}}R_{i}+\widehat{\beta_{3}}ESC_{i}+\widehat{\beta_{4}}I_{i}
+  \end{gathered}
+\end{equation*}
+	\vspace{-0.3cm}
+
+	Resumo da saída do R:
+	\vspace{-0.5cm}
+	\begin{center}
+  \begin{tabular}{cccc}
+    \toprule
+                    &{\small  Valor Est.}&{\small Erro Padrão}& P-valor  \\
+    \midrule
+{\small Intercepto }&{\small  -3.54342  }&{\small 0.66772    }&{\small 1.12e-07* }\\ 
+{\small S2         }&{\small  -0.71483  }&{\small 0.08940    }&{\small 1.28e-15* }\\
+{\small R2         }&{\small   0.64436  }&{\small 0.12215    }&{\small 1.33e-07* }\\
+{\small R4         }&{\small   0.54040  }&{\small 0.06591    }&{\small 2.42e-16* }\\
+{\small R5         }&{\small  -1.38578  }&{\small 0.55451    }&{\small 0.01245*  }\\ 
+{\small ESC2       }&{\small   0.33147  }&{\small 0.27559    }&{\small 0.22906  }\\  
+{\small ESC3       }&{\small   0.09528  }&{\small 0.26815    }&{\small 0.72235  }\\  
+{\small ESC4       }&{\small  -0.87388  }&{\small 0.27176    }&{\small 0.00130*  }\\
+{\small ESC5       }&{\small  -2.14116  }&{\small 0.68340    }&{\small 0.00173*  }\\
+{\small I          }&{\small   0.22666  }&{\small 0.03733    }&{\small 1.27e-09* }\\
+    \bottomrule
+  \end{tabular}
+	\vspace{-0.2cm}
+  \captionof{table}{Resultado da função glm do R}
+  \label{tab:tablabel}
+\end{center}
+
+
+%\begin{center}
+%\begin{Schunk}
+%\begin{Soutput}
+%Call: glm(formula = Y ~ S + R + ESC + I, family = binomial(link = logit), 
+    %data = dados)
+%
+%Deviance Residuals: 
+    %Min       1Q   Median       3Q      Max  
+%-1.7491  -1.1673   0.8069   0.9369   2.2899  
+%
+%Coefficients:
+            %Estimate Std. Error z value Pr(>|z|)    
+%(Intercept) -3.54342    0.66772  -5.307 1.12e-07 ***
+%S2          -0.71483    0.08940  -7.996 1.28e-15 ***
+%R2           0.64436    0.12215   5.275 1.33e-07 ***
+%R4           0.54040    0.06591   8.199 2.42e-16 ***
+%R5          -1.38578    0.55451  -2.499  0.01245 *  
+%ESC2         0.33147    0.27559   1.203  0.22906    
+%ESC3         0.09528    0.26815   0.355  0.72235    
+%ESC4        -0.87388    0.27176  -3.216  0.00130 ** 
+%ESC5        -2.14116    0.68340  -3.133  0.00173 ** 
+%I            0.22666    0.03733   6.071 1.27e-09 ***
+%---
+%Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+%
+    %Null deviance: 7306.3  on 5355  degrees of freedom
+%Residual deviance: 6744.2  on 5346  degrees of freedom
+%AIC: 6764.2
+%\end{Soutput}
+%\end{Schunk}
+%\end{center}
+\vspace{-0.2cm}
+As categorias ESC2 e ESC3 foram não significativas, assim realizou-se o agrupamento destas e avaliou-se um novo ajuste com a co-variável escolaridade com
+quatro categorias, porém a categoria nova permaneceu não significativa, logo, manteve-se o primeiro modelo. Após o ajuste, encontrou-se:
+\vspace{-0.2cm}
+
+\begin{center}
+  \begin{tabular}{cccc}
+  \hline
+{\small Categorias }&{\small   OR }&{\small 2.5 \%}&{\small 97.5 \%  }\\ 
+  \hline
+{\small(Intercept) }&{\small 0.03 }&{\small -4.85 }&{\small -2.23     }\\ 
+{\small  S2        }&{\small 0.49 }&{\small -0.89 }&{\small -0.54     }\\ 
+{\small  R2        }&{\small 1.90 }&{\small 0.41  }&{\small 0.89      }\\ 
+{\small  R4        }&{\small 1.72 }&{\small 0.41  }&{\small 0.67      }\\ 
+{\small  R5        }&{\small 0.25 }&{\small -2.63 }&{\small -0.40     }\\ 
+{\small  ESC2      }&{\small 1.39 }&{\small -0.22 }&{\small 0.86      }\\ 
+{\small  ESC3      }&{\small 1.10 }&{\small -0.44 }&{\small 0.61      }\\ 
+{\small  ESC4      }&{\small 0.42 }&{\small -1.42 }&{\small -0.35     }\\ 
+{\small  ESC5      }&{\small 0.12 }&{\small -3.68 }&{\small -0.92     }\\ 
+{\small  I         }&{\small 1.25 }&{\small 0.15  }&{\small 0.30      }\\ 
+   \hline
+\end{tabular}
+\vspace{-0.2cm}
+  \captionof{table}{OR e IC dos parâmetros do modelo}
+  \label{tab:tablabel}
+\end{center}
+\vspace{-0.45cm}
+
+\end{posterbox}
+
+\begin{posterbox}[name=Resultados,column=2,row=0]{Resultados}
+
+Na tabela abaixo apresenta-se a probabilidade de um jovem que morreu, ter sido assassinado, dado algumas características. 
+\vspace{-0.05cm}
+\begin{center}
+  \begin{tabular}{ccccc}
+  \hline
+\hline
+ {\small Sexo     }&{\small  R/C      }&{\small  Esc.    }&{\small  Idade }&{\small  Prob.}     \\
+\hline
+ {\small Masc.    }&{\small  Branca   }& -                 &   17            &{\small     0,58}\\
+ {\small Masc.    }&{\small  Negra    }& -                 &   17            &{\small     0,72}\\
+ {\small Masc.    }&{\small  Negra    }& $\geq$12          &   17            &{\small     0,23}\\
+ {\small Fem.     }&{\small  Branca   }& 8 a 11            &   16            &{\small     0,18}\\
+ {\small Fem.     }&{\small  Branca   }& 8 a 11            &   17            &{\small     0,22}\\
+ {\small Fem.     }&{\small  Parda    }& $\geq$12          &   17            &{\small     0,12}\\
+\hline
+\hline
+%{\small *Em anos}  &                   &                   &                 &                    \\
+%\multicolumn{5}{c}{*Anos}
+\end{tabular}
+\vspace{-0.05cm}
+  \captionof{table}{Probabilidade de um jovem que morreu, ter sido assassinado, dado algumas características.}
+  \label{tab:tablabel}
+\end{center}
+
+Algumas interpretações do Odds Ratio: 
+
+\begin{itemize}
+\item A chance de um indivíduo negro ser assassinado é $90\%$ maior que a chance de um indivíduo branco;
+%\item A chance de um indivíduo pardo ser assassinado é $72\%$ maior que a chance de um indivíduo branco;
+\item A chance de um indivíduo indígena ser assassinado é $75\%$ menor que a chance de um indivíduo branco;
+%\item A chance de um indivíduo que tem de 8 a 11 anos de estudo ser assassinado é $58\%$ menor que a chance de um indivíduo com nenhum estudo;
+\item A chance de um indivíduo que tem 12 ou mais anos de estudo ser assassinado é $88\%$ menor que a chance de um indivíduo com nenhum estudo;
+\item A chance de um indivíduo do sexo feminino ser assassinado é $52\%$ menor que a chance de um indivíduo do sexo masculino;
+\item A mudança de uma unidade na idade altera em $25\%$ o logito do modelo. 
+\end{itemize}
+\end{posterbox}
+
+\begin{posterbox}[name=QualiAjuste,column=2,below=Resultados]{Qualidade do Ajuste}
+Para verificar a qualidade do modelo ajustado, foi realizada a análise gráfica dos resíduos de Pearson, o gráfico Q-Qplot
+dos resíduos com envelope simulado e da curva ROC. Para visualizar os gráficos e a análise completa deste trabalho, o script do R e o banco de dados para a reprodução dos resultados pode-se acessar a página \url{fsbmat.github.io}.
+\end{posterbox}
+
+\begin{posterbox}[name=Agradecimentos,column=2,below=QualiAjuste]{Agradecimento}
+O autor agradece a Fundação de Amparo a Pesquisa de Minas Gerais (FAPEMIG) pelo apoio no desenvolvimento deste trabalho.
+\end{posterbox}
+\renewcommand{\refname}{\vspace{-0.7em}}
+\begin{posterbox}[name=refs,column=2,below=Agradecimentos]{Referências}
+% In the last box, you will usually have a list of references
+% The bibliography automatically adds the title "References", but
+% this have been removed in the preamble
+
+% use either ......
+%\bibliographystyle{plain}
+%\begin{thebibliography}{1}% Simple bibliography with widest label of 1
+%\itemsep=-0.01em% Save space between the separation
+%\setlength{\baselineskip}{0.4em}% Save space with longer lines
+%\bibitem{baposter} Brian Amberg: \emph{LaTeX Poster Template}, \url{http://www.brian-amberg.de/uni/poster/} 
+%\bibitem{pgfplots} Christian Feuersänger: \emph{PGFPlots - A LaTeX Package to create normal/logarithmic plots in two and three dimensions}, \url{http://pgfplots.sourceforge.net/} 
+%\bibitem{jknaau} Jesper Kjær Nielsen: \emph{Official AAU Beamer Theme, Poster Theme, and Report Template}, \url{http://kom.aau.dk/~jkn/latex/latex.php}
+%\bibitem{jknsqrt-1} Jesper Kjær Nielsen: \emph{Official AAU Beamer Theme, Poster Theme, and Report Template}, \url{http://sqrt-1.dk/latex/latex.php}
+%\end{thebibliography}
+
+\bibliographystyle{plain}
+\bibliography{referencia}
+% ...... or
+%  \bibliographystyle{IEEEbib}
+%  \bibliography{IEEEabrv,mybib,mybib2} 
+\end{posterbox}
+
+\end{poster}
+
+\end{document}
