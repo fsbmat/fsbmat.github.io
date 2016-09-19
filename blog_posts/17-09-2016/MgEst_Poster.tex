@@ -238,7 +238,6 @@ de regressão logística foram retirados 62 indivíduos (aproximadamente 1,15\% dos
 categoria era caracterizada como ``ignorado'' no banco de dados. Dessa forma, restaram 5356 indivíduos para análise.
 
 As descrições das codificações estão na tabela abaixo:
-\vspace{0.25cm}
 \begin{center}
 \begin{tabular}{c|c|c}
 \hline \hline
@@ -247,15 +246,15 @@ Variáveis             & Categorias &  Descrição \\
 \multirow{2}{*}{Y}    &  0&  Não homicídio\\
                       &  1&  homicídio\\
 											\hline
-\multirow{2}{*}{S}    &  1&  Masculino\\
+\multirow{2}{*}{S}    &  1*&  Masculino\\
                       &  2&  Feminino\\
 											\hline
-\multirow{4}{*}{R}    &  1&  R/C Branca\\
+\multirow{4}{*}{R}    &  1*&  R/C Branca\\
                       &  2&  R/C Negra\\
                       &  4&  R/C Parda\\
                       &  5&  R/C Indígena\\
 											\hline
-\multirow{5}{*}{ESC}  &  1&  Nenhum \\
+\multirow{5}{*}{ESC}  &  1*&  Nenhum \\
                       &  2&  1 a 3 anos\\
                       &  3&  4 a 7 anos\\
                       &  4&  8 a 11 anos\\
@@ -264,6 +263,9 @@ Variáveis             & Categorias &  Descrição \\
 					I           & Idade (Cont.) &15 a 17 anos \\
 					\hline
 			\hline
+			\hline
+%{\small *cat. referência}  &                   &          \\
+\multicolumn{3}{l}{*Categorias de Referência}
 \end{tabular}
 \captionof{table}{Variáveis consideradas no estudo com suas respectivas categorias}
 \label{tab:tab1}
@@ -271,7 +273,7 @@ Variáveis             & Categorias &  Descrição \\
 
 Como havia poucos indivíduos na categoria distinta de solteiro para a variável estado civil, foram considerados
 somente indivíduos solteiros na análise. Não houve nenhum indivíduo de 15 a 17 anos caracterizado com a raça/cor amarela.
-\vspace{0.25cm}
+%\vspace{0.25cm}
 
 \end{posterbox}
 
