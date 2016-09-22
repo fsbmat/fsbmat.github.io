@@ -34,7 +34,7 @@ Neste post faço uma análise de um banco de dados do Datasus e apresento o perf
 
 <center><font size="6" color="#76asaf">
 <a href="/blog_posts/22-09-2016/post3">
-<b>Segundo post do Blog</b>
+<b>Terceiro post do Blog</b>
 </a></font></center>
 
 ***
