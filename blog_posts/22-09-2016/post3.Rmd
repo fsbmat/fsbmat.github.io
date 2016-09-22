@@ -1,0 +1,330 @@
+---
+title: "Exemplos de Aplicação do Modelo de Seleção de Heckman"
+author: "Fernando"
+date: "`r Sys.Date()`"
+fontsize: "20pt"
+output:
+  html_document:
+    fig_caption: yes
+    force_captions: yes
+    highlight: pygments
+    toc: yes
+    #Sumário flutuante
+    #toc_float: true
+    #numerar seções
+    number_sections: true
+    #Mostrar ou esconder os códigos (show ou hide)
+    code_folding: hide
+    #Diversos modelos de documentos ver outros em http://bootswatch.com/
+    theme: united
+bibliography: referencia.bib    
+---
+
+***
+
+```{r setup, include=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#MROZ 1987
+
+<p style="text-align: justify;">
+De acordo com @hill2008principles, em um problema de estimação de parâmetros, se os dados são obtidos por amostragem aleatória, métodos de regressão, clássicos, tais como mínimos quadrados, funcionam bem. No entanto, se os dados são obtidos por um procedimento de amostragem que não é aleatório, os procedimentos normais não funcionam adequadamente. Geralmente enfrentamos tais problemas na amostragem. Uma ilustração famosa vem de economia do trabalho. Se quisermos estudar os determinantes dos salários das mulheres casadas, nos deparamos com um problema de seleção da amostra. Pois, ao recolher dados sobre as mulheres casadas, e perguntar-lhes o salário que ganham, muitas vão responder que são donas de casa. Nós só observamos os dados sobre salários de mercado quando a mulher escolhe entrar na força de trabalho. Uma estratégia é ignorar as mulheres que são donas de casa, omiti-las a partir da amostra, em seguida, usar mínimos quadrados para estimar a equação de salários para aquelas que trabalham. Esta estratégia é falha, a razão para a falha é que a amostra não é uma amostra aleatória, uma vez que os dados observados, ao omitir as mulheres que são donas de casa, são selecionados por um processo sistemático.
+</p>
+
+O primeiro exemplo é retirado do livro de @hill2008principles, vamos reconsiderar a análise dos salários recebidos por mulheres casadas usando o conjunto de dados obtidos de @mroz1987sensitivity. Na amostra de 753 mulheres casadas, 428 são empregadas no mercado formal e recebem salários diferentes de zero. Vejam uma parte do conjunto de dados:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+setwd("~/GitHub/Modelos de Heckman/Modelo-de-Heckman")
+#install.packages("Rtools")
+#devtools::install_github("hadley/readxl")
+library(readxl)
+dados <- read_excel("~/GitHub/Modelos de Heckman/Modelo-de-Heckman/mroz_z.xls",col_names = TRUE, col_types = NULL)
+dados[423:433,c(5,6,19,23,14,1,7,21)]
+attach(dados)
+#tail(MEPS2001)
+```
+
+```{r,echo=FALSE,cache=FALSE,message=FALSE,fig.align='center'}
+par(mfrow=c(1,2))
+#library(stringr)
+#dados$wage<-as.numeric(dados$wage)
+#wage2<- str_replace(dados$wage, pattern="NA", replacement= 0)
+#wage2<-as.numeric(wage2)
+#dados$wage2
+#dados$lwage<-as.numeric(dados$lwage)
+#lwage2<- str_replace(dados$lwage, pattern="NA", replacement= 0)
+#lwage2<-as.numeric(lwage2)
+#dados$lwage2
+hist(wage,ylim=c(0,200),xlim = c(-1,30),xlab = "Salário de mulheres com emprego formal", ylab = "Frequência",main = "Dados MROZ")
+hist(lwage,ylim=c(0,150),xlim = c(-3,5),xlab = "Log do Salário de mulheres com emprego formal", ylab = "Frequência",main = "Dados MROZ")
+```
+
+Primeiro, vamos estimar uma equação simples para o salário, explicando $ln(salário)$ como uma função da educação, EDUC, e anos de experiência no mercado de trabalho (EXPER), utilizando as 428 mulheres que têm salários positivos. O modelo é:
+
+$$ln(wage)_{i}=\beta_{0}+\beta_{1}Educ+\beta_{2}exper+\epsilon_{i},$$ 
+
+com, $\epsilon\sim N(0,1).$
+
+as estimativas dos parâmetros são:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+lreg<-lm(lwage~educ+exper,data = dados[dados$inlf==1,])
+summary(lreg)
+```
+
+O retorno estimado para a educação é cerca de 11%, e os coeficientes estimados de educação e experiência são estatisticamente significativos. 
+
+##Ajuste com função Glm e lm do R
+
+O procedimento Heckit (seleção amostral) começa por estimar um modelo probit de participação na força de trabalho. Como variáveis explicativas usamos a idade da mulher, seus anos de escolaridade, uma variável de indicador para saber se ela tem filhos, e a taxa de imposto marginal que ela iria pagar sobre rendimentos se empregado. O modelo probit é dado por:
+
+\begin{align*}
+  inlf_{i} &\sim& Binomial (n, \pi_i)\\
+  g(\pi_i) &=& \beta_{0}+\beta_{1}Age+\beta_{2}Educ_{i}+\beta_{3}kids_{i}+\beta_{4}mtr
+\end{align*}
+
+<p style="text-align: justify;">
+Sendo $inlf$ a variável resposta binária, $Age_{i},Educ_{i},kids_{i}$ e $mtr_{i}$ as i-ésimas realizações das respectivas variáveis explicativas $Age,Educ,kids$ e $mtr,$ respectivamente, e $g(\pi_i)=\Phi^{-1}(\pi_{i})$ a função de ligação probit. Como houve indivíduos com o mesmo conjunto de covariáveis considera-se o número de repetições $n=428$ para a distribuição de $inlf_{i}.$
+</p>
+
+as estimativas dos parâmetros são:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Modelo Probit
+fit1<-glm(inlf~age+educ+kids+mtr,family=binomial(link=probit),data=dados)
+summary(fit1)
+```
+
+Como esperado, os efeitos da idade, a presença de crianças, e as perspectivas de impostos mais altos reduzem significativamente a probabilidade de que uma mulher se junte à força de trabalho, enquanto a educação aumenta a probabilidade. Utilizando os coeficientes estimados calculamos a razão inversa de Mills para as 428 mulheres com salários de mercado. 
+
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(sampleSelection)
+dados$IMR <- invMillsRatio(fit1)$IMR1#Criar uma nova coluna com a covariável Razão Inversa de Mills 
+dados[423:433,c(5,6,19,23,14,1,7,21,32)]
+```
+
+Este é então incluído na equação de regressão múltipla de salários e aplicado mínimos quadrados para obter as seguintes estimativas: 
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Modelo de Regressão Linear Simples com wage>0
+fit2<- lm(lwage~educ+exper+IMR, data = dados[dados$inlf==1,])
+summary(fit2)
+```
+
+Notemos que o coeficiente estimado da razão inversa de Mills é estatisticamente significativo, o que implica que existe um viés de seleção presente nos resultados de quadrados mínimos da primeira equação de regressão sem a covariável IMR. Além disso, o retorno salárial estimado para a educação diminuiu de 11% para aproximadamente 6%. 
+
+Outra forma de proceder os calculos acima é utilizar o método de Máxima Verossimilhança ou o método de duas etapas de Heckman para estimar todos os parâmetros do modelo de regressão via pacote _sampleSelection_ do *R*. Vejamos as saídas:
+
+##Ajuste com o pacote Sample Selection
+###Processo de duas etapas
+```{r,echo=FALSE,message=FALSE}
+
+library("sampleSelection")
+# Two-step estimation
+fit3<-heckit( inlf~age+educ+kids+mtr,
+              lwage~educ+exper, dados)
+summary(fit3)
+
+```
+
+Note neste caso a diferença entre as t-estatísticas. Os valores anteriores das t-estatísticas, calculados via função glm e lm são baseados em erros padrão como normalmente calculado pelo uso da regressão de mínimos quadrados. Os habituais erros padrão não levam em conta o fato de que a razão inversa de Mills é um valor estimado. Assim, o pacote _sampleSelection_ corrige os erros padrão ao levar em conta a estimativa do primeiro estágio probit, estes são usados para construir as t-estatísticas ajustadas. Como podemos ver as t-estatísticas ajustadas são um pouco menores na saída do _sampleSelection_, indicando que os erros padrão ajustados são um pouco maiores do que os da saída do glm e lm.
+
+É preferível estimar o modelo completo, tanto a equação de seleção e a equação de interesse, em conjunto por máxima verosimilhança. Pois, os erros padrão com base no procedimento de máxima verossimilhança são menores do que aqueles gerados pelo método de estimação de dois passos.
+
+###Método de Máxima Verossimilhança
+```{r,echo=FALSE,message=FALSE}
+# ML estimation
+fit4<-selection(inlf~age+educ+kids+mtr,
+                lwage~educ+exper, dados)
+summary(fit4)
+```
+
+Neste caso a estimativa do parâmetro da razão inversa de Mills é:
+
+```{r,echo=FALSE,message=FALSE}
+res<-fit4$estimate
+IMR<-res[9]*res[10]
+IMR
+```
+
+
+#MEPS2001
+
+<p style="text-align: justify;">
+O artigo de @marchenko2012heckman considerou os dados sobre os gastos 
+ambulatoriais do `Medical Expenditure Panel Survey 2001 (MEPS2001)`, analisadas por Cameron e Trivedi (2010). MEPS é a fonte de dados sobre o custo e a utilização de cuidados de saúde e cobertura de seguro de saúde mais completa dos Estados Unidos, segundo a Agência de Investigação de Saúde e Qualidade (AHRQ) dos EUA. A amostra é restrita a apenas aqueles indivíduos que estão cobertos por seguros privados, com idades entre 21 e 64 anos. Os dados consistem de 3328 observações, dos quais 526 (15,8%) correspondem aos valores de despesas zero. O conjunto de dados inclui diversas variáveis explicativas, tais como idade, sexo, anos de escolaridade, entre outros. 
+</p>
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(ssmrob)
+data(MEPS2001)
+attach(MEPS2001)
+#head(MEPS2001)
+MEPS2001[1:10,c(1,2,4,8,18,22,20,16,17,21)]
+#tail(MEPS2001)
+```
+
+Vejam a distribuição dos dados brutos de despesas ambulatoriais e dos dados de despesas ambulatoriais logaritmados:
+
+```{r,echo=FALSE,cache=FALSE,message=FALSE,fig.align='center'}
+library(ssmrob)
+#Carregando o conjunto de dados MEPS2001 - dados de despesas ambulatoriais
+data(MEPS2001)
+attach(MEPS2001)
+par(mfrow=c(1,2))
+hist(ambexp,ylim = c(0,3500),xlim=c(0,20000) ,xlab = "Despesas Ambulotariais", ylab = "Frequência",main = "Dados do MEPS 2001")
+hist(lnambx,ylim = c(0,800),xlim=c(0,12), xlab = "Log das Despesas Ambulotariais", ylab = "Frequência",main = "Dados do MEPS 2001")
+```
+
+<p style="text-align: justify;">
+Como observado por Cameron e Trivedi, a suposição de normalidade subjacente 
+é muito suspeita para esses dados. O que é possível de se verificar por meio da visualização do histograma do log das despesas apresentado. Antes de dar sequência com a aplicação dos modelos de seleção amostral, considere uma regressão linear múltipla relacionando os gastos ambulotariais com as diversas outras variáveis disponíveis no banco de dados e supondo erro aleatório com distribuição normal, ou seja, considere o modelo:
+
+$$lnambx_{i}=\beta_{0}+\beta_{1}Age+\beta_{2}female+\beta_{3}Educ+\beta_{4}blhisp+\beta_{5}totchr+\beta_{6}ins+\epsilon_{i},$$ 
+
+com, $\epsilon\sim N(0,1).$
+
+as estimativas dos parâmetros são:
+
+```{r,echo=FALSE}
+lreg<-lm(lnambx~age+female+educ+blhisp+totchr+ins)
+summary(lreg)
+```
+
+Podemos ver que todos os parâmetros são altamente significativos, esse ajuste foi realizado com os dados completos incluindo os valores zero. Poderíamos pensar que estes não devem fazer parte do ajuste e retirá-los, neste caso teríamos uma mudança significativa no ajuste:
+
+```{r,echo=FALSE}
+lreg<-lm(lnambx~age+female+educ+blhisp+totchr+ins,data = MEPS2001[ MEPS2001$dambexp == 1, ] )
+summary(lreg)
+```
+
+Mas o fato é que não podemos deixar de considerar que as pessoas que possuem gasto zero com despesas ambulatoriais talvez necessitavam de atendimento ambulatorial mas tomaram a decisão por não gastar e portanto essa decisão pode afetar o ajuste.
+Ou seja, a disposição para gastar com relação ao gasto pode ser uma relação importante de ser analisada. Assim, a variável gasto ambulatorial, além de poder estar relacionada com as variáveis do estudo também deve estar relacionada com uma outra variável que mensura a disposição para gastar, neste caso, é natural que se considere um modelo de seleção amostral para a análise, pois esse busca justamente acrescentar uma covariável ao modelo de regressão que mensura essa disposição. Cameron e Trivedi (2010, p.561), entre outros, utilizou o modelo de seleção amostral clássico de Heckman para analisar esses dados. Como a distribuição dos gastos é altamente viesada, a análise foi realizada utilizando a escala logarítmica. 
+</p>
+
+## Ajuste com as funções glm e lm do R
+
+```{r, echo=FALSE,message=FALSE}
+library(aod)
+#Modelo probit
+fit1<-glm( dambexp ~ age+female+educ+blhisp+totchr+ins, family = binomial(link = "probit"),data=MEPS2001)
+summary(fit1)
+MEPS2001$IMR <- invMillsRatio(fit1)$IMR1#Criar uma nova coluna com a covariável Razão Inversa de Mills 
+#Modelo Linear Simples com razão de Mill's
+fit2 <- lm( lnambx ~ age+female+educ+blhisp+totchr+ins + IMR,
+                data = MEPS2001[ MEPS2001$dambexp == 1, ] )
+summary(fit2)
+#wald.test(b = coef(fit3), Sigma = vcov(fit3), Terms = 8)
+```
+
+Esse mesmo ajuste pode ser feito através do pacote _sampleSelection_ usando o método de dois passos e máxima verossimilhança:
+
+##Ajuste com o pacote Sample Selection
+
+###Processo de duas etapas
+```{r,echo=FALSE,message=FALSE}
+
+library("sampleSelection")
+# Two-step estimation
+fit3<-heckit( dambexp ~ age+female+educ+blhisp+totchr+ins,
+                 lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001 )
+summary(fit3)
+
+```
+
+###Método de Máxima Verossimilhança
+```{r,echo=FALSE,message=FALSE}
+# ML estimation
+fit4<-selection( dambexp ~ age+female+educ+blhisp+totchr+ins,
+                    lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001)
+summary(fit4)
+```
+
+Existe também o pacote de estimação robusta _SSMROB_ que apresenta...
+
+## Ajuste com o pacote SSMROB
+
+```{r,echo=FALSE,cache=FALSE,message=FALSE}
+#Equação de seleção que será ajustada via modelo probit
+selectEq <- dambexp ~ age+female+educ+blhisp+totchr+ins
+#Equação de regressão que será ajustada via modelo linear simples
+outcomeEq <- lnambx ~ age+female+educ+blhisp+totchr+ins
+fit5<-heckitrob(outcomeEq,selectEq,control=heckitrob.control(tcc=3.2,weights.x1="robCov"))
+summary(fit5)
+```
+
+<p style="text-align: justify;">
+Nas Tabelas abaixo são apresentados os resultados de estimativa dos dados pelo estimador clássico obtidos utilizando o sampleSelection pacote R (Toomet e Henningsen 2008) e pelo estimador de dois estágios robusto proposto por Mikhail Zhelonkin com o pacote SSMROB Para todas as variáveis as diferenças entre as estimativas não são tão grandes, exceto para o parâmetro da razão inversa de Mills (IMR). O estimador robusto retornou $\hat{\beta}_{IMR} = -0.6768$, em comparação com o clássico $\hat{\beta}_{IMR}=-0.4802$. Podemos observar que o estimador clássico é menos tendencioso. Além disso, se considerarmos os erros padrão, vemos que o erro padrão da estimativa robusta $(0,2593)$ é menor do que a do estimador clássico $(0,2907).$ O valor de p do teste de viés de seleção robusto é $p=0.009$, o que leva à conclusão da presença de SSB. Porém o estimador clássico sugere a ausência de viés.
+</p>
+
+    *Sem a covariável rendimento*
+
+ - **dambexp:** Decisão de gastar
+ - **lnambx :** Quantidade de Recurso gasto (log)
+
+
+#Meps 2001 Com a covariável rendimento
+
+A equação de regressão primária inclui fatores como idade, sexo, etnia, estado da educação, status do seguro, bem como o número de doenças crônicas. A equação de seleção inclui adicionalmente o rendimento, impondo a restrição de exclusão do modelo, embora o uso da renda para esta finalidade é discutível. Todos os fatores considerados são fortes preditores para a decisão de gastar. Todos os outros fatores como o status de seguros também são fortes preditores da quantidade de despesa.
+
+```{r,echo=FALSE}
+#O teste Wald mostra $(p = 0,380)$ do n.º seleção amostral, $Ho:\rho = 0$ ou, #mais precisamente, $Ho: \tanh\rho = 0,$ não fornece evidência suficiente para #rejeitar essa hipótese, o que implica que o montante de gastos não está #relacionado com a decisão de gastar e podem ser analisados separadamente por #meio de regressão OLS padrão. Esta conclusão parece não plausível.
+```
+
+##Ajuste com o pacote SSMROB
+
+```{r,echo=FALSE,cache=FALSE,message=FALSE}
+#Equação de seleção que será ajustada via modelo probit
+selectEq <- dambexp ~ age+female+educ+blhisp+totchr+ins+income
+#Equação de regressão que será ajustada via modelo linear simples
+outcomeEq <- lnambx ~ age+female+educ+blhisp+totchr+ins
+fit<-heckitrob(outcomeEq,selectEq,control=heckitrob.control(tcc=3.2,weights.x1="robCov"))
+summary(fit)
+
+```
+
+##Ajuste com o pacote Sample Selection
+
+###Processo de duas etapas
+```{r,echo=FALSE,message=FALSE}
+
+library("sampleSelection")
+# Two-step estimation
+fit4<-heckit( dambexp ~ age+female+educ+blhisp+totchr+ins+income,
+                 lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001 )
+summary(fit4)
+
+```
+
+###Método de Máxima Verossimilhança
+```{r,echo=FALSE,message=FALSE}
+# ML estimation
+fit5<-selection( dambexp ~ age+female+educ+blhisp+totchr+ins+income,
+                    lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001)
+summary(fit5)
+
+```
+
+##Ajuste com as funções glm e lm do R
+
+```{r, echo=FALSE,message=FALSE}
+library(aod)
+#Modelo probit
+fit2<-glm( dambexp ~ age+female+educ+blhisp+totchr+ins+income, family = binomial(link = "probit"),data=MEPS2001)
+summary(fit2)
+MEPS2001$IMR <- invMillsRatio(fit2)$IMR1#Criar uma nova coluna com a covariável Razão Inversa de Mills 
+#Modelo Linear Simples com razão de Mill's
+fit3 <- lm( lnambx ~ age+female+educ+blhisp+totchr+ins + IMR,
+                data = MEPS2001[ MEPS2001$dambexp == 1, ] )
+summary(fit3)
+#wald.test(b = coef(fit3), Sigma = vcov(fit3), Terms = 8)
+```
+
+
+#Referências
+
+
+
+

@@ -30,4 +30,18 @@ Neste post irei escrever e exemplificar o uso da Birnbaum. [[Leia mais]](/blog_p
 
 Neste post faço uma análise de um banco de dados do Datasus e apresento o perfil de jovens assassinados em Minas Gerais no ano de 2013. [[Leia mais]](/blog_posts/17-09-2016/post2)
 
+***
+
+<center><font size="6" color="#76asaf">
+<a href="/blog_posts/22-09-2016/post3">
+<b>Segundo post do Blog</b>
+</a></font></center>
+
+***
+
+**17-07-2016 - Fernando de Souza Bastos:**
+
+Neste post faço uma aplicação do modelo de Heckman a alguns banco de dados conhecidos. [[Leia mais]](/blog_posts/22-09-2016/post3)
+
+
 
