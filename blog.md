@@ -44,16 +44,3 @@ Neste post faço uma análise de um banco de dados do Datasus e apresento o perf
 Neste post faço uma aplicação do modelo de Heckman a alguns banco de dados conhecidos. [[Leia mais]](/blog_posts/22-09-2016/post3)
 
 
-
-***
-
-<center><font size="6" color="#76asaf">
-<a href="/blog_posts/22-09-2016/post3">
-<b>quarto post do Blog</b>
-</a></font></center>
-
-***
-
-**22-09-2016 - Fernando de Souza Bastos:**
-
-Neste post faço uma aplicação do modelo de Heckman a alguns banco de dados conhecidos. [[Leia mais]](testepage/post/post3)
