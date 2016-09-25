@@ -1,8 +1,7 @@
 ---
-layout: page
 title: "Introdução a Estimação e Modelagem no R com o Uso da Distribuição Birnbaum-Saunders"
 author: "Fernando de Souza Bastos - Doutorando em Estatística (UFMG)"
-date: '2016-09-07'
+date: "01 de julho de 2016"
 output:
   html_document:
     fig_caption: yes
@@ -26,6 +25,8 @@ comments: yes
 tags: [Distribuição Birnbaum-Saunders, Monte Carlo, otimização, R]
 ---
 
+***
+
 ```{r,echo = FALSE}
 options(OutDec=",")
 ```
@@ -48,7 +49,8 @@ Além do contexto inferencial, é discutido algumas observações sobre questõe
 <p style="text-align: justify;">
 Seja $T$ uma variável aleatória representando o tempo até a ocorrência do evento de interesse, então assumindo que essa variável segue a distribuição Birnbaum-Saunders, tem-se que a sua função de distribuição acumulada (f.d.a.) é dada por:
 </p>
-\begin{equation}\label{fun1}
+(@fun1) <a name="1"></a>
+\begin{equation}
 F_{T}(t;\alpha,\beta)=P(T\leq t)=\Phi\left[\dfrac{1}{\alpha}\left(\sqrt{\frac{t}{\beta}}-\sqrt{\frac{\beta}{t}}\right)\right],\ t>0
 \end{equation}
 <p style="text-align: justify;">
@@ -57,9 +59,10 @@ com parâmetros de forma $\alpha>0$ e de escala $\beta>0$, que é usualmente den
 </p>
 ##Função Densidade
 <p style="text-align: justify;">
-Considerando a distribuição acumulada da variável aleatória $T$ dada em $(\ref{fun1})$ a sua correspondente
+Considerando a distribuição acumulada da variável aleatória $T$ dada em [1](#1) a sua correspondente
 função densidade de probabilidade (fdp) é dada por
-\begin{equation}\label{fun2}
+(@fun2)
+\begin{equation}
 f_{T}(t)=\dfrac{t^{-\frac{3}{2}}(t+\beta)}{2\sqrt{2\pi}\alpha\sqrt{\beta}}\exp\left[-\frac{1}{2\alpha^{2}}\left(\frac{t}{\beta}+\frac{\beta}{t}-2\right)\right]
 \end{equation}
 em que $\alpha>0$ e $\beta>0.$
@@ -185,7 +188,7 @@ legend(2, 8, c(expression(beta==0.50),
 * $F_{T}(\beta)=0.5,$ ou seja, $\beta$ é a mediana da $BS(\alpha,\beta)$
 * Se $T\sim BS(\alpha,\beta),$ então $$a>0,\ aT\sim BS(\alpha,a\beta)\ \textrm{e}\ T^{-1}\sim BS(\alpha,\beta^{-1})$$
 * A partir da FDA, fazendo $Z=\dfrac{1}{\alpha}\left(\sqrt{\frac{t}{\beta}}-\sqrt{\frac{\beta}{t}}\right)$ temos: 
-\begin{equation}\label{fun3}
+\begin{equation}
 T=\dfrac{\beta}{4}\left[\alpha Z +\sqrt{(\alpha Z)^2+4}\right]^{2}
 \end{equation}
 Essa relação é extremamente útil e pode ser usada para obtenção de números pseudo-aleatórios.
@@ -423,13 +426,17 @@ curve(expr = dnorm(x,mean=mean(m1[,2]),sd=sd(m1[,2])),add=T, col="red")
 As vezes, reparametrizações são essenciais, pois facilitam o desenvolvimento analítico de algumas distribuições e também podem melhorar 
 a eficiência em simulações, em determinadas situações, como em regressão, quando a distribuição da variável resposta não possui a média como um de seus
 parâmetros podemos proceder uma reparametrização de forma a atender essa condição e poder ajustar a média da variável resposta. Exemplos de distribuições em
-que são realizadas reparametrizações com sucesso são: distribuição beta (ver Ferrari e Cribari-Neto 2004) e distribuição gaussiana inversa (ver Tweedie 1957).</p>
+que são realizadas reparametrizações com sucesso são: distribuição beta, ver @ferrari2004beta, e distribuição gaussiana inversa, ver @tweedie1957statistical.</p>
 
 Seja $\mu=\beta(1+\dfrac{\alpha^{2}}{2})$ e $\phi=\dfrac{2}{\alpha^{2}}.$ Então,
-\begin{equation}\label{3}
-\alpha=\sqrt{\dfrac{2}{\phi}}\ \textrm{e}\ \beta=\dfrac{\mu}{(1+\frac{1}{\phi})}.
+<a name="3"></a>
+
+(@fun3)
+\begin{equation}
+\alpha=\sqrt{\dfrac{2}{\phi}}\quad \textrm{e}\quad \beta=\dfrac{\mu}{(1+\frac{1}{\phi})}.
 \end{equation}
-A fda da $BS(\mu,\phi)$ é obtida substituindo os valores de $\alpha$ e $\beta$ definidos em $(\ref{3})$ na expressão $(\ref{fun1}).$ De onde, temos:
+
+A fda da $BS(\mu,\phi)$ é obtida substituindo os valores de $\alpha$ e $\beta$ definidos em [3](#3) na expressão [1](#1). De onde, temos:
 \begin{equation}
 F(t;\mu,\phi)=P(T\leq t)=\Phi\left[\sqrt{\dfrac{\phi}{2}}\left(\sqrt{\dfrac{(\phi+1)t}{\phi\mu}}-\sqrt{\dfrac{\phi\mu}{(\phi+1)t}}\right)\right],
 \end{equation}
