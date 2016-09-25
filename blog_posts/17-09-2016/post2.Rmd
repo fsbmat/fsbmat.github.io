@@ -1,0 +1,550 @@
+---
+title: "Perfil dos jovens de 15 a 17 anos assassinados em Minas Gerais no ano de 2013"
+subtitle: "Estudo via Regressão Logística"
+author: "Fernando de Souza Bastos"
+date: "11 de setembro de 2016"
+fontsize: "12pt"
+output:
+  html_document:
+    fig_caption: yes
+    force_captions: yes
+    highlight: pygments
+    toc: yes
+    #Sumário flutuante
+    #toc_float: true
+    #numerar seções
+    number_sections: true
+    #Mostrar ou esconder os códigos (show ou hide)
+    code_folding: hide
+    #Diversos modelos de documentos ver outros em http://bootswatch.com/
+    theme: united
+bibliography: referencia.bib    
+---
+
+```{r setup, include=FALSE}
+require(knitr)
+require(kfigr)
+knitr::opts_chunk$set(echo = TRUE,fig.align = "center",message=FALSE, warning=FALSE)
+```
+
+#Introdução
+<p style="text-align: justify;">
+De acordo com @da2015mapa, diversos estudos têm apontado para a existência de um crescimento real da violência no Brasil, em particular das mortes por homicídios, desde o final da década de 1970. As regiões geográficas e seus respectivos municípios, principalmente as grandes cidades, apresentam um aumento na mortalidade por causas externas a partir da década de 1990. 
+</p>
+<p style="text-align: justify;">
+Neste contexto, diversas são as notícias de violência cometida pelos jovens e contra os jovens no país, principalmente na faixa de 15 a 19 anos. De acordo com 
+@zeroum e @Jacobo, o Brasil ocupa o terceiro lugar em relação a 85 países no ranking de mortes de adolescentes de 15 a 19 anos, perdendo apenas para México e El Salvador. São 54,9 mortes a cada 100 mil jovens. Na faixa de 16 e 17 anos, a taxa de mortalidade ficou em 54,1 homicídios por 100 mil adolescentes em 2013, um aumento de 2,7% em relação a 2012 e de 38,3% na década.
+</p>
+<p style="text-align: justify;">
+De acordo com @Jacobo, o homicídio é uma das principais causas de mortes de adolecentes de 16 a 17 anos no país e quando se faz uma análise dos dados de Minas Gerais do sistema de mortalidade do Datasus, conforme `r figr("fig1", TRUE, type="Figura")` é possível notar que o maior número de assassinatos ocorre aos 17 anos de idade. Neste sentido, o presente trabalho tem a finalidade de caracterizar o perfil quanto a estado civil, escolaridade, sexo, raça/cor e idade (15 a 17 anos) dos jovens que morreram assassinados no estado de Minas Gerais no ano de 2013.
+</p>
+#Material e Métodos
+
+
+<p style="text-align: justify;">
+A informação de mortalidade é uma das mais importantes na área da saúde, pois o óbito é um evento único e seu registro obrigatório. No Brasil, o Ministério da
+Saúde através da Fundação Nacional de Saúde e do Datasus são responsáveis por divulgar os dados de mortalidade do país por meio do sistema de informação da mortalidade (SIM). 
+</p>
+<p style="text-align: justify;">
+A fonte de informação primária da base de dados são os atestados de óbito emitidos pelos cartórios civis. Esta base contém informações sobre a data do óbito, idade, sexo, estado civil, local de ocorrência, causa de mortalidade, município de residência, ocupação e escolaridade. Apesar da enorme quantidade de informações, o banco de dados apresenta problemas sérios de preenchimento de algumas variáveis como educação, estado civil, ocupação, entre outras, que dificultam o seu uso. 
+</p>
+<p style="text-align: justify;">
+Utilizou-se para a análise apenas as variáveis consideradas prioritárias pelo Ministério da Saúde, idade, sexo, estado cívil, escolaridade e causa de mortalidade, nas quais os valores não preenchidos foram retirados do estudo. A causa de mortalidade está codificada segundo a Classificação Internacional de Doenças através da CID10. 
+</p>
+<p style="text-align: justify;">
+As descrições das codificações estão na tabela abaixo:
+</p>
+\begin{array}{c|c|c}
+\hline
+\textrm{Variáveis}             &\textrm{ Categorias} &\textrm{  Descrição} \\
+\hline
+            \textrm{Y}&  0&  \textrm{Morte registrada como causas distintas de homicídio}\\
+                      &  1&  \textrm{Morte registrada como homicídio}\\
+											\hline
+       \textrm{S}     &  1*&  \textrm{Masculino}\\
+                      &  2&  \textrm{Feminino}\\
+											\hline
+       \textrm{R}     &  1*&  \textrm{Raça/Cor Branca}\\
+                      &  2&  \textrm{Raça/Cor Negra}\\
+                      &  4&  \textrm{Raça/Cor Parda}\\
+                      &  5&  \textrm{Raça/Cor Indígena}\\
+											\hline
+        \textrm{ESC}  &  1*&  \textrm{Nenhum estudo}\\
+                      &  2&  \textrm{1 a 3 anos de estudo}\\
+                      &  3&  \textrm{4 a 7 anos de estudo}\\
+                      &  4&  \textrm{8 a 11 anos de estudo}\\
+                      &  5&  \textrm{12 ou mais anos de estudo}\\
+											\hline
+\textrm{I}  & \textrm{Idade (Contínua)} &\textrm{15 a 17 anos} \\
+\hline
+\textrm{*Categorias de Referência}
+\end{array}
+
+
+<p style="text-align: justify;">
+Como havia poucos indivíduos na categoria distinta de solteiro para a variável estado civil, foram considerados
+somente indivíduos solteiros na análise. Não houve nenhum indivíduo de 15 a 17 anos caracterizado com a raça/cor amarela.
+</p>
+<p style="text-align: justify;">
+Foram coletados os dados de 5.418 jovens de 15 a 17 anos que morreram no ano de 2013 no estado de Minas Gerais, para a análise 
+de regressão logística foram retirados 62 indivíduos (aproximadamente 1,15% dos dados) por não terem todas as informações completas e por terem informações cuja
+categoria era caracterizada como ``ignorado'' no banco de dados. Dessa forma, restaram 5356 indivíduos para análise. 
+</p>
+
+<p style="text-align: justify;">
+A análise será feita com o objetivo de analisar a relação entre uma variável dependente e quatro outras variáveis independentes como mencionado na tabela anterior, por meio da teoria de modelos de regressão. Como a variável resposta é binária (0 ou 1), usa-se conceitos de modelos lineares generalizados considerando a distribuição binomial como componente aleatório do modelo. o componente sistemático é dado pela combinação linear das variáveis explicativas e para função de ligação considera-se como possível as funções: logit, probit, complemento log-log e cauchit.  
+</p>
+
+<p style="text-align: justify;">
+Assim, temos:
+</p>
+
+\begin{eqnarray*}
+  Y_i &\sim& Binomial (n, \pi_i)\\
+  g(\pi_i) &=& \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} + \dots +
+  \beta_{p}x_{pi}
+\end{eqnarray*}
+
+
+<p style="text-align: justify;">
+Sendo $Y$ a variável resposta, $x_{1i}, x_{2i}, \dots, x_{ni}$ as i-ésimas realizações das respectivas variáveis explicativas $X_1, X_2, \dots, X_n$ e $g(\pi_i)$ e a função de ligação, funções citadas acima. Como houve indivíduos com o mesmo conjunto de covariáveis considera-se o número de repetições igual a $n$ para a distribuição de $Y_{i}.$
+</p>
+
+##Estatística Descritiva dos Dados
+
+<p style="text-align: justify;">
+No gráfico abaixo temos a proporção de pessoas assassinadas por idade, dos 10 aos 60 anos. Note que o número de homicídios aumenta até os 17 anos e a partir dai começa a diminuir lentamente, haja visto que a morte por assassinato dos 15 aos 17 anos é superior a morte causada por outras causas, como 
+pode ser verificado no segundo gráfico. 
+</p>
+
+```{r fig1,echo=TRUE,anchor="Figura"}
+dados2=read.table("Dados_Completos_a_partir_dos_dez.txt",header=TRUE)
+attach(dados2)
+
+par(mfrow=c(1,1))
+a2=table(I,Y)
+prop2=a2[,2]/(a2[,1]+a2[,2])
+Idade2 <- seq(10, 60, 1)
+plot(Idade2,prop2,ylab="Proporção", xlab="Idade", main="Proporção por idade de pessoas \n assassinadas no ano de 2013 em Minas Gerais \n em relação ao total de pessoas que morreram")
+lines(Idade2,prop2)
+title(sub="Figura 1")
+rm(dados2)
+```
+
+<p style="text-align: justify;">
+Os dados abaixo apresentam a quantidade de indíviduos em cada categoria das respectivas variáveis estudadas.
+</p>
+
+<!--Para referenciar a tabela summary do próximo chunk use o código abaixo-->
+<!--`r figr("tab2", TRUE, type="table")`-->
+
+```{r tab2, echo=TRUE,message=FALSE,anchor="tabela", results='asis'}
+setwd("~/GitHub/webpage/fsbmat.github.io/blog_posts/17-09-2016")
+dados=read.table("15_17.txt",header=TRUE)
+attach(dados)
+#S=sexo, R=Raça/cor, ESC=Escolaridade, I=Idade, Y=1: Morrer assassinado e 0: morrer de outra forma
+dados=transform(R=factor(R),ESC=factor(ESC),S=factor(S),dados)
+#head(dados)
+
+#Estatística Descritiva dos dados
+kable(summary(dados),format = "markdown",digits = 2, padding = 3)
+```
+
+<p style="text-align: justify;">
+Na `r figr("fig2", TRUE, type="Figura")` e `r figr("fig3", TRUE, type="Figura")` podemos constatar o que se pode chamar de uma tragédia estadual, morrem mais jovens com idade entre 15 e 17 anos assassinados no estado de Minas Gerais do que devido a outras causas. 
+</p>
+
+```{r fig2,echo=TRUE,anchor="Figura"}
+tb <- table(dados$Y)
+names(tb)<- c("Outras causas", "Assasinados")
+bp <- barplot(tb, beside = T, las = 1, xlab = 'discriminação das mortes',
+              ylab = 'Frequência', , ylim = c(0, 4000), main="Quantidade de jovens com idades entre 15 e 17 anos \n que morreram em 2013 no Estado de Minas Gerais")
+text(x = c(bp), y = c(tb), labels = tb, pos = 3)
+title(sub="Figura 2")
+
+```
+
+```{r fig3,echo=TRUE,anchor="Figura"}
+#Note que as mortes por assassinato superam as mortes por outras causas
+
+bp=barplot(table(Y,I), beside=T, leg=c("Morte por outra causa", "Homicidío" ),
+           args.legend = list(x = "topleft",bty = "n"),ylim=c(0, 2000), ylab="Quantidade", xlab="Idade", main="Quantidade de jovens com idades entre 15 e 17 anos \n que morreram em 2013 no Estado de Minas Gerais")
+text(bp, table(Y,I)+100, table(Y,I))
+title(sub="Figura 3")
+```
+
+<p style="text-align: justify;">
+A `r figr("fig4", TRUE, type="Figura")` mostra o número de jovens de 15 a 17 anos, discriminados por sexo, que morreram por motivos distintos de homicídio e por homicídio. Note que o número de jovens, do sexo masculino, nesta faixa etária que morrem assassinados, é maior do que o número de jovens que morrem por outras causas. 
+</p>
+
+```{r fig4,echo=TRUE,anchor="Figura"}
+bp=barplot(table(Y,S),ylim=c(0, 3500), beside=T,leg=c("Morte por outra causa", "Homicidío" ),
+           ylab="Quantidade", xlab="Gênero",names.arg = c("masculino","feminino"), main="Quantidade de jovens com idades entre 15 e 17 anos \n que morreram em 2013 no Estado de Minas Gerais \n discriminados por Gênero")
+text(bp, table(Y,S)+150, table(Y,S))
+title(sub="Figura 4")
+```
+
+
+<p style="text-align: justify;">
+A `r figr("fig5", TRUE, type="Figura")` mostra o número de jovens de 15 a 17 anos, discriminados por raça/cor, que morreram por motivos distintos de homicídio e por homicídio. Note que o número de jovens, de cor negra e/ou parda, nesta faixa etária que morrem assassinados, é maior do que o número de jovens que morrem por outras causas. 
+</p>
+```{r fig5,echo=TRUE,anchor="Figura"}
+#barplot(table(Y,R))
+bp=barplot(table(Y,R),args.legend = list(x = "topleft",bty = "n"), ylim=c(0, 2500), beside=T,leg=c("Morte por outra causa", "Homicidío" ),
+           ylab="Quantidade", xlab="Raça/Cor",names.arg = c("Branco","Negro","Pardo","Indígena"), main="Quantidade de jovens com idades entre 15 e 17 anos \n que morreram em 2013 no Estado de Minas Gerais \n discriminados por Raça/Cor")
+text(bp, table(Y,R)+150, table(Y,R))
+title(sub="Figura 5")
+```
+
+
+<p style="text-align: justify;">
+A grande maioria dos jovens de 15 a 17 anos que morreram assassinadas em Minas Gerais no ano de 2013 tinham somente de 1 a 7 anos de estudo, como mostra a `r figr("fig6", TRUE, type="Figura")`.
+</p>
+
+```{r fig6,echo=TRUE,anchor="Figura"}
+bp=barplot(table(Y,ESC), args.legend = list(x = "topleft",bty = "n"), ylim=c(0, 2500), beside=T,leg=c("Morte por outra causa", "Homicidío" ),
+           ylab="Quantidade", xlab="Escolaridade",names.arg = c("Nenhum","1 a 3","4 a 7","8 a 11","12 ou mais"), main="Quantidade de jovens com idades entre 15 e 17 anos \n que morreram em 2013 no Estado de Minas Gerais \n discriminados por escolaridade")
+text(bp, table(Y,ESC)+150, table(Y,ESC))
+title(sub="Figura 6")
+```
+
+<!--
+<p style="text-align: justify;">
+No box-plot seguinte é possível constatar que a mediana da proporção de mortes de jovens em relação ao tempo de escolaridade tem uma semelhança dos indivíduos de 1 a 3 anos de estudo com os indivíduos com nenhum ano de estudo, provavelmente, o parâmetro de ESC2 não será significativo.
+</p>
+
+```{r,echo=TRUE}
+#A função aggregate() é usada para encontrar o número de sucessos e o número de fracassos para cada "cenário":
+w <- aggregate(Y ~ S+R+ESC+I, data=dados,FUN=sum)
+n <- aggregate(Y ~ S+R+ESC+I,data=dados,FUN=length)
+success=w$Y; failure=n$Y
+w.n <- data.frame(S=w$S,R=w$R,ESC=w$ESC,I=w$I, success=w$Y, failure=n$Y , proportion = round(w$Y/n$Y,6))
+#head(w.n)
+#Número de pessoas assassinadas por idade
+#plot(w.n[,4],w.n[,5],ylab="Quantidade",xlab="Idade", main="Quantidade de pessoas #assassinadas por Idade \n em Minas Gerais no ano de 2013 \n a partir dos quinze #anos de idade")
+```
+
+```{r,echo=TRUE}
+#Box-plot da Proporção de pessoas assassinadas por Escolaridade
+plot(w.n[,3],w.n[,7],ylab="Proporção",xlab="Escolaridade", names=c("Nenhum","1 a 3","4 a 7","8 a 11","12 ou mais"), main="Box-plot das  pessoas assassinadas em Minas Gerais \n no ano de 2013 por Escolaridade")
+```
+
+Box-plot da Proporção de pessoas assassinadas em relação a Raça/Cor:
+
+```{r,echo=TRUE}
+#Box-plot da Proporção de pessoas assassinadas por Raça/Cor
+plot(w.n[,2],w.n[,7],ylab="Proporção de assassinato",xlab="Raça/Cor",names=c("Branco","Negro","Pardo","Indígena"), main="Box-plot das pessoas assassinadas em Minas Gerais \n no ano de 2013 por Raça/Cor")
+```
+
+Box-plot da Proporção de pessoas assassinadas em relação ao Sexo:
+
+```{r,echo=TRUE}
+#Box-plot da Proporção de pessoas assassinadas por Sexo
+bx=plot(w.n[,1],w.n[,7],ylab="Proporção",xlab="", names= c("masculino","feminino"), main="Box-plot das  pessoas assassinadas em Minas Gerais \n no ano de 2013 por Sexo")
+```
+
+-->
+
+#Ajuste do Melhor Modelo de Regressão Logística e Seleção de Variáveis
+
+<p style="text-align: justify;">
+Após a descrição e exploração dos dados é necessário buscar a seleção de variáveis que melhor explicam a variável dependente, a seleção será realizada pelo algoritmo *stepwise* considerando como critério de seleção o AIC (Critério de Informação de Akaike), poderia ser usado também o método *forward* ou o método *backward*.
+</p>
+
+<p style="text-align: justify;">
+Considerou-se como modelo completo o modelo aditivo com todos
+os efeitos principais e todas as interações duplas somando ao todo 10 parâmetros. Os modelos com interações três a três e com a interação quatro a quatro tiveram problemas de convergência para o método *stepwise* e por isso não foram considerados.
+</p>
+
+```{r,echo=TRUE}
+##Stepwise selection
+step(glm(formula = Y ~ S+R+ESC+I+S*R+S*ESC+S*I+R*ESC+R*I+ESC*I, family=binomial(link=logit), data = dados), direction = "both")
+step(glm(formula = Y ~ S+R+ESC+I+S*R+S*ESC+S*I+R*ESC+R*I+ESC*I, family=binomial(link=probit), data = dados), direction = "both")
+step(glm(formula = Y ~ S+R+ESC+I+S*R+S*ESC+S*I+R*ESC+R*I+ESC*I, family=binomial(link=cloglog), data = dados), direction = "both")
+step(glm(formula = Y ~ S+R+ESC+I+S*R+S*ESC+S*I+R*ESC+R*I+ESC*I, family=binomial(link=cauchit), data = dados), direction = "both")
+```
+
+<p style="text-align: justify;">
+O algoritmo com diferentes funções de ligação resultou no mesmo conjunto de variáveis, são elas: idade do indivíduo, raça/cor, escolaridade e sexo. O resultado do algoritmo é coerente com os gráficos apresentados anteriormente, pois todas as variáveis diferem dentre suas categorias em relação a discriminação da morte. Portanto, no decorrer deste trabalho a análise seguirá com o modelo abaixo.
+</p>
+
+\begin{eqnarray}
+    Y_i &\sim& Binomial (n, \widehat{\pi_i})\\
+    g(\widehat{\pi_i}) &=& \widehat{\beta_{0}} +
+    \widehat{\beta_{1}}sexo_{i} + \widehat{\beta_{2}}raça_{i}+\widehat{\beta_{3}}Escolaridade_{i}+\widehat{\beta_{4}}Idade_{i}
+\end{eqnarray}
+
+<p style="text-align: justify;">
+Sendo as categorias determinadas conforme tabela 1 apresentada anteriormente.
+</p>
+
+Outras formas de escolha do melhor modelo são:
+
+  -  Usando o pacote glmulti
+ 
+```{r,echo=TRUE}
+library (glmulti)
+search.1.aicc<-glmulti(y=Y ~.,data=dados, fitfunction="glm",level=1,method="h",crit="aicc",
+                       family=binomial(link="logit"))
+print(search.1.aicc)
+aa<-weightable(search.1.aicc)
+cbind(model=aa[1:5,1],round(aa[1:5,2:3],digits=3))
+```
+
+Note que não houve diferença em relação ao modelo definido.
+
+<p style="text-align: justify;">
+Com os componentes aleatório e sistemático do modelo já definidos conforme
+discussões anteriores, é necessário fazer a escolha da função de ligação. Dentre as funções de ligação definidas para uma variável resposta binária, faz-se-a um comparativo conforme medidas descritas nos gráficos e tabela
+abaixo.
+</p>
+
+```{r,echo=TRUE}
+source("misc-fun.R")
+model.log <- glm(formula = Y ~ S+R+ESC+I,
+                 family = binomial(link = "logit"), data = dados)
+dev1<-model.log$null.deviance
+dev2<-model.log$deviance
+r2_log<-1-(dev2/dev1)
+r2_log
+
+model.prob <- glm(formula = Y ~ S+R+ESC+I,
+                  family = binomial(link = "probit"), data = dados)
+dev1<-model.prob$null.deviance
+dev2<-model.prob$deviance
+r2_prob<-1-(dev2/dev1)
+r2_prob
+model.clog <- glm(formula = Y ~ S+R+ESC+I,
+                  family = binomial(link = "cloglog"), data = dados)
+dev1<-model.clog$null.deviance
+dev2<-model.clog$deviance
+r2_clog<-1-(dev2/dev1)
+r2_clog
+model.cauc <- glm(formula = Y ~ S+R+ESC+I,
+                  family = binomial(link = "cauchit"), data = dados)
+dev1<-model.cauc$null.deviance
+dev2<-model.cauc$deviance
+r2_cauc<-1-(dev2/dev1)
+r2_cauc
+
+
+par(mfrow=c(1,4))
+envelope(model.log)
+title("Ligação Logit")
+envelope(model.prob)
+title("Ligação Probit")
+envelope(model.clog)
+title("Ligação Complemento Log-Log")
+envelope(model.cauc)
+title("Ligação Cauchit")
+```
+
+<p style="text-align: justify;">
+Para verificar a qualidade do modelo ajustado, foi realizada a análise gráfica da curva ROC, como mostra as figuras abaixo. 
+</p>
+
+```{r fig7,echo=TRUE,anchor="Figura"}
+library(pROC)
+roc(model.log$y,model.log$fitted.values,plot=T,ci=T,identity=TRUE,print.auc=TRUE)
+roc(model.prob$y,model.prob$fitted.values,plot=T,ci=T,identity=TRUE,print.auc=TRUE)
+roc(model.clog$y,model.clog$fitted.values,plot=T,ci=T,identity=TRUE,print.auc=TRUE)
+roc(model.cauc$y,model.cauc$fitted.values,plot=T,ci=T,identity=TRUE,print.auc=TRUE)
+```
+
+<p style="text-align: justify;">
+O valor correspondente à área abaixo da curva ROC semelhante para todos os modelos, e de acordo com os níveis conhecidos indicam que o modelo detém uma capacidade de discriminação aceitável. 
+</p>
+
+\caption{Comparação dos Modelos com Diferentes \textit{Links}}
+  \begin{array}{lccccc}
+    \hline
+\textrm{Ligação} & \textrm{gl} & \textrm{AIC}  & \textrm{Deviance} & \textrm{Area ROC} & \textrm{Pseudo R^2}  \\
+    \hline
+     \textrm{Logit         }& 5355 & 6764 &     6744 & 0.6802   & 0.0769 \\
+     \textrm{Probit        }& 5355 & 6765 &     6745 & 0.6802   & 0.0768 \\
+     \textrm{Comp. log-log }& 5355 & 6762 &     6742 & 0.6796   & 0.0772 \\
+     \textrm{Cauchit       }& 5355 & 6761 &     6741 & 0.6802   & 0.0774 \\
+    \hline
+  \end{array}
+
+
+<p style="text-align: justify;">
+O teste de Hosmer-Lemeshow é um teste que avalia o modelo ajustado comparando as frequências observadas e as esperadas. O teste associa os dados as suas probabilidades estimadas da mais baixa a mais alta, então faz um teste qui-quadrado para determinar se as frequências observadas estão próximas das frequências esperadas. Já o teste de Pearson, é utilizado para fazer análise dos resíduos para modelos logísticos, trata-se de uma medida útil para avaliar o quão bem o modelo selecionado ajustou-se aos dados.
+</p>
+  
+  As hipóteses testadas foram:
+  
+  -  Ho: O modelo é adequado
+  -  H1: O modelo não é adequado
+
+
+```{r,echo=TRUE}
+library(ResourceSelection)
+hoslem.test(model.log$y, fitted(model.log))
+hoslem.test(model.prob$y, fitted(model.prob))
+hoslem.test(model.clog$y, fitted(model.clog))
+hoslem.test(model.cauc$y, fitted(model.cauc))
+```
+
+-  P-valor do teste qui-quadrado de Pearson:   
+  
+```{r,echo=TRUE}
+#Resíduo de Pearson
+rp=residuals(model.log,type="pearson")
+1-pchisq(sum(rp^2),model.log$df.residu)
+rp=residuals(model.prob,type="pearson")
+1-pchisq(sum(rp^2),model.prob$df.residu)
+rp=residuals(model.clog,type="pearson")
+1-pchisq(sum(rp^2),model.clog$df.residu)
+rp=residuals(model.cauc,type="pearson")
+1-pchisq(sum(rp^2),model.cauc$df.residu)
+```
+
+
+<p style="text-align: justify;">
+Os modelos especificados com diferentes funções de ligação
+apresentaram um comportamento muito parecido. Com base nos gráficos
+de resíduos simulados, não há problemas quanto a especificação do
+modelo nas quatro diferentes funções de ligação propostas, todos os
+gráficos apresentaram resíduos dentro dos intervalos simulados. Já com
+base nas medidas de comparação exibidas na tabela, não nota-se desempenho distinto, em relação ao teste de *Hosmer-Lemeshow* somente o modelo de *Clog-log* não é adequado e de acordo com o resíduo de Pearson, todos são adequados, logo, em função da magnitude das medidas comparativas e pela vantagem interpretativa da especificação *logit*, dada em função de razão de chances, esta foi definida no modelo proposto.
+</p>
+
+#Modelo ajustado
+
+Com as análises realizadas, o modelo é definido da seguinte forma:
+
+\begin{equation*}
+  \begin{gathered}
+  Y_i &\sim& Binomial (n, \widehat{\pi_i})\\
+g(\widehat{\pi_i}) &=& \widehat{\beta_{0}} +
+    \widehat{\beta_{1}}sexo_{i} + \widehat{\beta_{2}}raça_{i}+\widehat{\beta_{3}}Escolaridade_{i}+\widehat{\beta_{4}}Idade_{i}
+  \end{gathered}
+\end{equation*}
+
+<p style="text-align: justify;">
+A saída do R abaixo apresenta o conjunto de variáveis que compõem o modelo ajustado junto com os valores estimados dos coeficientes do modelo, o erro padrão dos coeficientes, os  quantis Z da  distribuição  normal  padrão e o p-valor de todos os parâmetros:
+</p>
+
+```{r,echo=TRUE}
+bestfit<- glm(formula = Y ~ S+R+ESC+I,
+                 family = binomial(link = "logit"), data = dados)
+summary(bestfit)
+```
+
+<p style="text-align: justify;">
+As categorias ESC2 e ESC3 foram não significativas, neste caso foi realizado o agrupamento das duas e avaliado um novo ajuste com a covariável escolaridade com
+somente três categorias, porém a categoria nova permaneceu não significativa, dessa forma, preferiu-se manter a covariável com quatro categorias, uma vez que não houve alteração na significância dos parâmetros.
+</p>
+
+
+#Análise de Diagnóstico
+<p style="text-align: justify;">
+Para subsidiar a avaliação da qualidade do modelo, a análise de diagnóstico verificará a adequação da distribuição proposta, da função de ligação, e do preditor linear. Ou seja, do modelo de regressão ajustado aos dados.
+</p>
+```{r,echo=TRUE}
+#Com relação a especificação das covariáveis no modelo podemos observar
+#na figura que não há grandes evidências de má especificação das
+#covariáveis no modelo, mesmo sendo observada a assimetria dos
+#resíduos. Note que a interpretação dos gráficos de diagnóstico é mais
+#flexível nestes casos, pois a limitação da variável resposta (suporte 0
+#ou 1) interfere na interpretação gráfica.
+
+
+## Preditor Linear
+#a <- car::residualPlots(bestfit, layout=c(1,3))
+
+```
+<p style="text-align: justify;">
+Abaixo são apresentados 3 gráficos que auxiliam na
+identificação de possíveis fuga de suposições do modelo. No caso
+apresentado, não temos evidências gráficas para suspeitar de nenhuma
+suposição não atendida. No gráfico 1 a magnitude dos resíduos ultrapassa 
+2 somente para alguns resíduos. No segundo gráfico representando o resíduo
+vs. valores ajustados, temos uma disposição aparentemente centrada em
+zero, lembre-se que a natureza da variável resposta dificulta
+a interpretação. No terceiro e último gráfico deste figura, (c), temos o
+gráfico quantil-quantil com envelope simulado, onde resíduos dispostos
+dentro das bandas de confiança representam adequação dos dados ao modelo
+proposto.
+</p>
+
+```{r,echo=TRUE}
+## Pressuposições
+diag.binom(bestfit)
+
+```
+
+<p style="text-align: justify;">
+Como entre as covariáveis, somente a idade é continua, porém com três valores distintos somente, 15, 16 e 17 anos, não foi verificado a existência de pontos influentes, pois caso, um ponto seja influente, vários também como mesma discriminação será.
+</p>
+#Resultados
+
+<p style="text-align: justify;">
+Com o modelo especificado e avaliado podemos realizar predições e
+interpretações. Utilizando as estimativas dos parâmetros, podemos encontrar os valores da *Odds Ratio* do modelo e os respectivos intervalos de confiança dos parâmetros do modelo. As categorias de referência foram, sexo masculino, Raça/Cor branca e nível de escolaridade nenhum estudo.
+</p>
+
+
+\begin{array}{ccccc}
+  \hline
+ \textrm{Categorias }& \textrm{Parâmetros }& \textrm{OR }& 2.5 \% & 97.5 \% \\ 
+  \hline
+\textrm{(Intercepto)}& -3.54 & 0.03 & -4.85 & -2.23 \\ 
+\textrm{  S2        }& -0.71 & 0.49 & -0.89 & -0.54 \\ 
+\textrm{  R2        }& 0.64 & 1.90 & 0.41 & 0.89 \\ 
+\textrm{  R4        }& 0.54 & 1.72 & 0.41 & 0.67 \\ 
+\textrm{  R5        }& -1.39 & 0.25 & -2.63 & -0.40 \\ 
+\textrm{  ESC2      }& 0.33 & 1.39 & -0.22 & 0.86 \\ 
+\textrm{  ESC3      }& 0.10 & 1.10 & -0.44 & 0.61 \\ 
+\textrm{  ESC4      }& -0.87 & 0.42 & -1.42 & -0.35 \\ 
+\textrm{  ESC5      }& -2.14 & 0.12 & -3.68 & -0.92 \\ 
+\textrm{  I         }& 0.23 & 1.25 & 0.15 & 0.30 \\ 
+   \hline
+\end{array}
+
+
+<p style="text-align: justify;">
+Após o ajuste do modelo, pode-se usá-lo para estimar a probabilidade de um indivíduo que morreu, ter sido assassinado, a partir de:
+</p>
+\begin{eqnarray}
+\hat{\pi} = \frac{\exp(-3.54-0.72S2+0.64R2+\cdots-0.87ESC4-2.14ESC5+0.23I)}{1+exp(-3.54-0.72S2+0.64R2+\cdots-0.87ESC4-2.14ESC5+0.23I)},
+\end{eqnarray}
+
+<p style="text-align: justify;">
+Na tabela abaixo apresenta-se a probabilidade de um jovem que morreu, ter sido assassinado, dado algumas características. Note que, dado que está morto, um jovem de 17 anos, solteiro, do sexo masculino, de cor negra e com nenhuma escolaridade possui 72,19% de probabilidade de ter morrido assassinado.
+</p>
+\begin{array}{ccccc}
+\hline
+\textrm{ Sexo}     &\textrm{ Raça/Cor}&\textrm{ Escolaridade}    &\textrm{ Idade}  & \textrm{Probabilidade} \\
+\hline
+\textrm{Masculino }&\textrm{ Branca   }&\textrm{ Nenhuma         }&   17   &    0,58      \\
+\textrm{ Masculino}&\textrm{ Negra    }&\textrm{ Nenhum          }&   17   &    0,72     \\
+\textrm{ Masculino}&\textrm{ Negra    }&\textrm{ 12 ou mais anos }&   17   &    0,23     \\
+\textrm{ Feminina }&\textrm{ Branca   }&\textrm{ 8 a 11 anos     }&   16   &    0,18      \\
+\textrm{ Feminina }&\textrm{ Branca   }&\textrm{ 8 a 11 anos     }&   17   &    0,22      \\
+\textrm{ Feminina }&\textrm{ Parda    }&\textrm{ 12 ou mais anos }&   17   &    0,12      \\
+\hline
+\end{array}
+
+Pode-se verificar ainda que: 
+
+  -  A chance de um indivíduo negro ser assassinado é 90% maior que a chance de um indivíduo branco;
+  -  A chance de um indivíduo pardo ser assassinado é 72% maior que a chance de um indivíduo branco;
+  -  A chance de um indivíduo indígena ser assassinado é 75% menor que a chance de um indivíduo branco;
+  -  A chance de um indivíduo que tem de 8 a 11 anos de estudo ser assassinado é 58% menor que a chance de um indivíduo com nenhum estudo;
+  -  A chance de um indivíduo que tem 12 ou mais anos de estudo ser assassinado é 88% menor que a chance de um indivíduo com nenhum estudo;
+  -  A chance de um indivíduo do sexo feminino ser assassinado é 52% menor que a chance de um indivíduo do sexo masculino;
+  -  A mudança de uma unidade na idade altera em 25% o logito do modelo. 
+
+#Exemplo de poster deste trabalho em PDF e tex
+
+  - Poster em pdf 
+
+[clique aqui](https://github.com/fsbmat/fsbmat.github.io/blob/master/blog_posts/17-09-2016/MgEst_Poster.pdf)
+
+  - Poster em tex 
+
+[clique aqui](https://github.com/fsbmat/fsbmat.github.io/blob/master/blog_posts/17-09-2016/MgEst_Poster.tex)
+
+#Referências
