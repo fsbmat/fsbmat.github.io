@@ -47,7 +47,7 @@ Neste post faço uma aplicação do modelo de Heckman a alguns banco de dados co
 ***
 
 <center><font size="6" color="#76asaf">
-<a href="https://cdn.rawgit.com/fsbmat/fsbmat.github.io/master/blog_posts/19-10-2016/post4.html">
+<a href="https://rawgit.com/fsbmat/fsbmat.github.io/master/blog_posts/19-10-2016/post4.html">
 <b>Quarto post do Blog</b>
 </a></font></center>
 
@@ -55,5 +55,5 @@ Neste post faço uma aplicação do modelo de Heckman a alguns banco de dados co
 
 **19-10-2016 - Fernando de Souza Bastos:**
 
-Neste post faço uma apresentação de Modelos com Variáveis Dependentes Limitadas. [[Leia mais]](https://cdn.rawgit.com/fsbmat/fsbmat.github.io/master/blog_posts/19-10-2016/post4.html)
+Neste post faço uma apresentação de Modelos com Variáveis Dependentes Limitadas. [[Leia mais]](https://rawgit.com/fsbmat/fsbmat.github.io/master/blog_posts/19-10-2016/post4.html)
 
