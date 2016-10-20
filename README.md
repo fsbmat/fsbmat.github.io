@@ -1,1 +1,1 @@
-# Fernando Bastos - Licenciado em Matemática, mestre em Estatística Aplicada e Biometrica e doutorando em Estatística, gosta de cachorro, de futebol (principalmente PES), de software livre, principalmente do R, e de política. Apreciador de uma skol gelada e de um bom papo!
+# Fernando Bastos - Licenciado em Matemática, mestre em Estatística Aplicada e Biometria e doutorando em Estatística, gosta de cachorro, de futebol (principalmente PES), de software livre, principalmente do R, e de política. Apreciador de uma skol gelada e de um bom papo!
