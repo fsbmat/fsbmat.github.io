@@ -1,7 +1,7 @@
 ---
 title: "Modelo de Seleção de Heckman"
-author: "Fernando de Souza Bastos -Universidade Federal de Minas Gerais"
-date: "21 de Outubro, 2016"
+author: "Fernando de Souza Bastos - Doutorando em Estatística (UFMG)"
+date: "19 de Outubro de 2016"
 output:
   slidy_presentation:
     incremental: true
@@ -14,6 +14,7 @@ output:
     toc: yes
     text.align: center
 bibliography: referencia.bib
+tags: [Regression Truncated, Censured, Sample Selection]
 ---
 
 ```{r echo=FALSE,message=FALSE, warning=FALSE}
