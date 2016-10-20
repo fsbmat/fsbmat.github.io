@@ -1,7 +1,7 @@
 ---
 title: "Modelo de Seleção de Heckman"
-author: "Fernando de Souza Bastos - Doutorando em Estatística (UFMG)"
-date: "19 de Outubro de 2016"
+author: "Fernando de Souza Bastos -Universidade Federal de Minas Gerais"
+date: "21 de Outubro, 2016"
 output:
   slidy_presentation:
     incremental: true
@@ -14,7 +14,6 @@ output:
     toc: yes
     text.align: center
 bibliography: referencia.bib
-tags: [Regression Truncated, Censured, Sample Selection]
 ---
 
 ```{r echo=FALSE,message=FALSE, warning=FALSE}
@@ -949,5 +948,11 @@ outcomeEq <- wage2 ~ education+age
 fit7<-heckitrob(outcomeEq,selectEq,control=heckitrob.control(tcc=3.2,weights.x1="robCov"))
 summary(fit7)
 ```
+
+***
+
+Maiores informações podem ser obtidas em:
+
+@heckman1976common, @heckman1977sample, @mroz1987sensitivity, @winship1992models, @puhani2000heckman, @greene2003econometric, @cameron2009microeconomics e @marchenko2012heckman.
 
 #Referências
