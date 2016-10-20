@@ -543,6 +543,8 @@ Pode-se verificar ainda que:
 
 [clique aqui](https://github.com/fsbmat/fsbmat.github.io/blob/master/blog_posts/17-09-2016/MgEst_Poster.pdf)
 
+[clique aqui](https://rawgit.com/fsbmat/fsbmat.github.io/master/blog_posts/17-09-2016/MgEst_Poster.pdf)
+
   - Poster em tex 
 
 [clique aqui](https://github.com/fsbmat/fsbmat.github.io/blob/master/blog_posts/17-09-2016/MgEst_Poster.tex)
