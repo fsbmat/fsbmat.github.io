@@ -1,0 +1,952 @@
+---
+title: "Modelo de Seleção de Heckman"
+author: "Fernando de Souza Bastos -Universidade Federal de Minas Gerais"
+date: "21 de Outubro, 2016"
+output:
+  slidy_presentation:
+    incremental: true
+    font_adjustment: +1
+    footer: "E-mail: fsbmat@gmail.com - Blog: fsbmat.github.io"
+    duration: 50
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+    toc: yes
+    text.align: center
+bibliography: referencia.bib
+---
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+require(tidyr)
+require(plyr)
+require(mosaic)
+require(readr)
+```
+
+
+#Variáveis Dependentes Limitadas 
+
+<p style="text-align: justify;">
+Como sabemos, variável dependente é uma medida que resulta do valor de outra medida variável. 
+</p>
+
+<p style="text-align: justify;">
++ Numa pesquisa que relaciona o stress a frequência cardíaca. Considera-se como a variável independente o stress e a variável dependente a frequência cardíaca;
+</p>
+
+<p style="text-align: justify;">
++ Se quisermos relacionar o efeito da educação sobre o rendimento para medir o efeito do nível de escolaridade sobre a renda anual, a variável independente é o nível de escolaridade e a variável dependente é a renda anual;
+</p>
+
+<p style="text-align: justify;">
++ Numa pesquisa sobre rendimento e horas de trabalho, nossa variável dependente é também o rendimento e a variável independente as horas de trabalho;
+</p>
+
++ etc.
+
+
+***
+
+<p style="text-align: justify;">
+Variáveis dependentes ás vezes são limitadas em seu domínio e nem sempre podemos observar os dados sobre as variáveis dependentes e independentes ao longo de toda uma população. Uma variável limitada pode ser classificada em duas categorias, variável truncada ou variável com censura. Também definimos amostras como truncadas ou com censura dependendo da natureza da limitação da variável dependente pesquisada.
+</p>
+
+# Amostra com Censura
+<p style="text-align: justify;">
+Dizemos que uma amostra é censurada quando algumas observações sobre a variável dependente, correspondentes a valores conhecidos da(s) variável(is) independente(s), não são observados. Ou seja, quando dados sobre a variável resposta não estão completamente disponíveis para algumas unidades da amostra. No entanto, para estas unidades, os dados sobre as variáveis regressoras são totalmente conhecidos. Assim, temos:
+</p>
+* **C1:** $\ y=y^{*}.1  (y^{*}>c)+c.1(y^{*}\leq c);$
+* **C2:** $\ y=y^{*}.1  (y^{*}<d)+d.1(y^{*}\geq d);$
+* **C3:** $\ y=y^{*}.1(c<y^{*}<d)+c.1(y^{*}\leq c)+d.1(y^{*}\geq d).$
+
+#Amostra Truncada
+
+<p style="text-align: justify;">
+Neste caso, os valores das variáveis independentes são conhecidos somente quando a variável dependente é observada. De outra forma, a amostragem truncada geralmente surge quando uma pesquisa tem como alvo um subconjunto específico da população e ignora inteiramente a outra parte da população. 
+</p>
+* __T1:__ $\ y=y^{*},\ \textrm{se}\ y^{*}>c,$ não observada caso contrário;
+* **T2:** $\ y=y^{*},\ \textrm{se}\ y^{*}<d,$ não observada caso contrário;
+* **T3:** $\ y=y^{*},\ \textrm{se}\ c<y^{*}<d,$ não observada caso contrário;
+
+#Densidade de uma v.a. truncada
+
+<p style="text-align: justify;">
+__Proposição:__ Seja $Y$ uma variável aleatória continua com função densidade de probabilidade $f(y)$ e $``a"$ constante real. A densidade condicional de $Y$ dado que $Y>a,$ fica dada por:
+\begin{eqnarray}\label{prop1}
+g(y|Y>a)=\frac{f(y)}{1-F(a)},
+\end{eqnarray}
+$F(.),$ função de distribuição acumulada de $Y.$
+
+ * Se $Y\sim N(\mu,\sigma^2),$ então:
+$$
+P(Y>a)=1-\Phi\left(\frac{a-\mu}{\sigma}\right)=1-\Phi(b)
+$$
+onde $b=\dfrac{a-\mu}{\sigma}$ e $\Phi(.)$ é a função de distribuição acumulada da normal padrão. 
+
+ * Segue neste caso que,
+\begin{eqnarray}
+g(y|Y>a)=\dfrac{f(y)}{1-\Phi(b)}=\dfrac{\frac{1}{\sigma}\phi(\frac{y-\mu}{\sigma})}{1-\Phi(b)},
+\end{eqnarray}
+onde $\phi(.)$ é a densidade da normal padrão.
+</p>
+
+#Momentos e Razão Inversa de Mills
+
+\begin{eqnarray}
+\nonumber E(Y|Y>a)&=&\displaystyle \mu+\sigma\lambda(b)\\
+\nonumber Var(Y|Y>a)&=&\sigma^{2}[1-\delta(b)],
+\end{eqnarray}
+em que $b=\dfrac{a-\mu}{\sigma}.$ 
+
+\begin{eqnarray}
+\nonumber \lambda(b)&=&\dfrac{\phi(b)}{1-\Phi(b)}\ \textrm{se o truncamento é}\ y>a, \\
+\nonumber \lambda(b)&=&-\dfrac{\phi(b)}{\Phi(b)}\ \textrm{se o truncamento é}\ y<a,
+\end{eqnarray}
+
+e $\delta(b)=\lambda(b)[\lambda(b)-b].$ 
+
+$\lambda(.)$ é conhecida como razão inversa de Mills.
+
+#Truncamento Incidental
+
+__Proposição:__ Sejam $Y$ e $Z$ duas variáveis aleatórias continuas com distribuição bivariada, correlação $\rho,$ e função densidade conjunta denotada por $f(y,z).$ A densidade de $Y,$ dado que $Z>a$ é:
+
+\begin{eqnarray}
+g(y|Z>a)=\frac{f(y,z)}{P(Z>a)}, a\in \mathcal{R} \ \textrm{qualquer.} 
+\end{eqnarray}
+
+
+##Momentos 
+
+Se $Y$ e $Z$ possuem distribuição normal bivariada com médias $\mu_{y}, \mu_{z},$ desvios-padrão $\sigma_{y}, \sigma_{z},$ respectivamente, e coeficiente de correlação $\rho,$ então,
+
+\begin{eqnarray}
+\displaystyle E(Y|Z>a)&=&\mu_{y}+\rho\sigma_{y}\lambda(b_{z})\\
+\nonumber \displaystyle Var(Y|Z>a)&=&\sigma^{2}_{y}[1-\rho^{2}\delta(b_{z})],
+\end{eqnarray}
+com $b_{z}=\dfrac{a-\mu_{z}}{\sigma_{z}},\ \lambda(b_{z})=\dfrac{\phi(b_{z})}{1-\Phi(b_{z})}$ e $\delta(b_{z})=\lambda(b_{z})[\lambda(b_{z})-b_{z}]$
+
+
+#Modelo de Regressão Truncado
+
+Considere uma variável aleatória $y_{i}^{*}$ linearmente dependente de $\mathbf{x}_{i},$ isto é:
+
+$$y_{i}^{*}=\mathbf{x}_{i}^{'}\boldsymbol{\beta}+\epsilon_{i},\ \textrm{onde,}$$ 
+
+$$\epsilon_{i}|\mathbf{x}_{i}\overset{iid}{\sim} N(0,\sigma^2)\Rightarrow y_{i}^{*}|x_{i}\overset{iid}{\sim} N(\mathbf{x}_{i}^{'}\boldsymbol{\beta},\sigma^{2})\ \textrm{e}\ E(y_{i}^{*})=\mathbf{x}_{i}^{'}\boldsymbol{\beta}.$$
+
+A observação $i$ é observada somente se $y_{i}^{*}$ está acima de um certo limite conhecido, isto é,
+\vspace{-0.2cm}
+\begin{eqnarray}
+y_{i}=\left\{
+\begin{array}{cc}
+y_{i}^{*},& \textrm{se}\ y_{i}^{*}> a,\\
+&\\
+n.a,& \textrm{se}\ y_{i}^{*}\leq a  
+\end{array}
+\right.
+\end{eqnarray}
+
+***
+
+A função densidade de $y_{i}$ é dada por:
+
+\begin{eqnarray}
+\displaystyle f(y_{i}|x_{i})=f(y_{i}^{*}|y_{i}^{*}>a,x_{i})=\frac{1}{\sigma}\dfrac{\phi\left(\dfrac{y_{i}-\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)}{\Phi\left(\frac{\mathbf{x}_{i}^{'}\boldsymbol{\beta}-a}{\sigma}\right)}
+\end{eqnarray} 
+
+Note que o valor esperado da variável observada é não linear em $\mathbf{x}_{i}.$
+\vspace{-0.2cm}
+\begin{eqnarray}
+\nonumber E(y_{i}|\mathbf{x}_{i})&=&E(y_{i}^{*}|y_{i}^{*}>a,\mathbf{x}_{i})\\
+\nonumber &=&\mathbf{x}_{i}^{'}\boldsymbol{\beta}+\sigma\dfrac{\phi\left[(a-\mathbf{x}_{i}^{'}\boldsymbol{\beta})/\sigma\right]}{1-\Phi\left[(a-\mathbf{x}_{i}^{'}\boldsymbol{\beta})/\sigma\right]}\\
+\nonumber &=&\mathbf{x}_{i}^{'}\boldsymbol{\beta}+\sigma\lambda(b_{i})
+\end{eqnarray}
+
+#Estimação
+
+A regressão linear simples da variável observada $y_{i}$ em $x_{i},$
+
+$$y_{i}=\mathbf{x}_{i}^{'}\boldsymbol{\beta}+u_{i},$$
+
+irá produzir estimativas viesadas de $\boldsymbol{\beta},$ pois o erro $u_{i}=(\epsilon_{i}|y_{i}^{*}>a)$ é correlacionado com $\mathbf{x}_{i}$ e $E(u_{i})=E(\epsilon_{i}|y_{i}^{*}>a)=\sigma\lambda(b_{i})>0.$ 
+
+Assim, a regressão truncada é, em geral, estimada por máxima verossimilhança. 
+
+A função log de verossimilhança é
+\begin{eqnarray}
+\nonumber \mathcal{L}(\theta|\mathbf{x}_{i})=\displaystyle \sum_{i=1}^{n}\ln \left[\sigma^{-1}\phi\left(\dfrac{y_{i}-\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)\right]-\sum_{i=1}^{n} \ln\left[1-\Phi\left(\dfrac{a-\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)\right],
+\end{eqnarray}
+permitindo estimar tanto $\boldsymbol{\beta}$ quanto $\sigma$ por um procedimento numérico iterativo. Propriedades usuais de MV (consistência, eficiência assintótica, e etc) se aplicam.
+
+#Interpretação dos parâmetros
+
+A interpretação dos parâmetros depende muito da questão de pesquisa. O efeito marginal sobre a variável dependente observada é dado por:
+
+
+\begin{eqnarray}
+\nonumber \dfrac{\partial E(y_{i}|x_{i})}{\partial \mathbf{x}_{ij}}&=&\dfrac{\partial E(y_{i}^{*}|y_{i}^{*}>a,x_{i})}{\partial \mathbf{x}_{ij}}\\
+\nonumber &=&\boldsymbol{\beta}_{j}\left(1-\lambda_{i}^{2}+\alpha_{i}\lambda_{i}\right)\\
+\nonumber &=& \boldsymbol{\beta}_{j}\underbrace{(1-\delta(\alpha_{i}))}_{0<\delta<1}
+\end{eqnarray}
+onde $\alpha_{i}=\left(\dfrac{a-\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)$ e $\lambda_{i}=\lambda(\alpha_{i}).$
+
+***
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.align='center'}
+library(truncreg)
+# Simulated data 
+set.seed(1)
+x  <- sort(rnorm(100)+4)
+y  <- -4 + 1*x + rnorm(100)
+
+# complete observations and observed sample:
+compl <- data.frame(x,y)
+sample <- subset(compl, y>0)
+
+# Predictions
+pred.OLS   <- predict(       lm(y~x, data=sample) )
+pred.trunc <- predict( truncreg(y~x, data=sample) )
+
+# Graph
+plot(   compl$x, compl$y,  pch= 1,xlab="x",ylab="y",main = "Modelo de Regressão com Truncamento")
+points(sample$x,sample$y,  pch=16)
+lines( sample$x,pred.OLS,  lty=2,lwd=2)
+lines( sample$x,pred.trunc,lty=1,lwd=2)
+abline(h=0,lty=3)        # horizontal line at 0
+legend("topleft", c("all points","observed points","OLS fit",
+                    "truncated regression"),
+       lty=c(NA,NA,2,1),pch=c(1,16,NA,NA),lwd=c(1,1,2,2))
+
+```
+
+#Modelo Tobit (Modelo de Regressão com Censura)
+
+Considere uma variável aleatória $y_{i}^{*}$ linearmente dependente de $\mathbf{x}_{i},$ isto é:
+
+$$y_{i}^{*}=\mathbf{x}_{i}^{'}\boldsymbol{\beta}+\epsilon_{i},\ \textrm{onde,}$$ 
+
+$$\epsilon_{i}|\mathbf{x}_{i}\overset{iid}{\sim} N(0,\sigma^2)\Rightarrow y_{i}^{*}|x_{i}\overset{iid}{\sim} N(\mathbf{x}_{i}^{'}\boldsymbol{\beta},\sigma^{2})\ \textrm{e}\ E(y_{i}^{*})=\mathbf{x}_{i}^{'}\boldsymbol{\beta}.$$
+
+Suponha que o valor observado $y_{i}$ é censurado abaixo do zero, isto é,
+
+\begin{eqnarray}
+y_{i}=\left\{
+\begin{array}{cc}
+y_{i}^{*},& \textrm{se}\ y_{i}^{*}> 0,\\
+&\\
+0,& \textrm{se}\ y_{i}^{*}\leq 0  
+\end{array}
+\right.
+\end{eqnarray}
+
+***
+
+A variável observada é uma variável aleatória mistura com massa de probabilidade em zero, 
+\vspace{-0.5cm}
+$$P(y_{i}=0|\mathbf{x}_{i})=P(y_{i}^{*}\leq 0|\mathbf{x}_{i})=\Phi\left(-\dfrac{\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)$$ 
+\vspace{-0.3cm}
+e para valores acima do zero com densidade: 
+$$f(y_{i}|x_{i})=\dfrac{1}{\sigma}\phi\left(\dfrac{y_{i}-\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)$$
+
+O valor esperado da variável observada é,
+\begin{eqnarray}
+\nonumber E(y_{i}|\mathbf{x}_{i})&=&0.P(y_{i}^{*}\leq 0|x_{i})+E(y_{i}^{*}|y_{i}^{*}>0,\mathbf{x}_{i}).P(y_{i}^{*}> 0|x_{i})\\
+%\nonumber &=&\left[\mathbf{x}_{i}^{'}\boldsymbol{\beta}+\sigma\dfrac{\phi\left(\mathbf{x}_{i}^{'}\boldsymbol{\beta}/\sigma\right)}{\Phi\left(\mathbf{x}_{i}^{'}\boldsymbol{\beta}/\sigma\right)}\right]\Phi\left(\mathbf{x}_{i}^{'}\boldsymbol{\beta}/\sigma\right)\\
+\nonumber &=&\Phi\left(\dfrac{\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)\left[\mathbf{x}_{i}^{'}\boldsymbol{\beta}+\sigma\lambda\left(-\dfrac{\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)\right]
+\end{eqnarray}
+
+#Estimação
+
+Log de Verossimilhança:
+
+\begin{eqnarray}
+\nonumber \mathcal{L}(\theta|\mathbf{x}_{i})&=&\displaystyle \sum_{i|y_{i}>0} \ln\left[\sigma^{-1}\phi\left(\dfrac{y_{i}-\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)\right]+\sum_{i|y_{i}=0}\ln\left[1-\Phi\left(\frac{\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)\right],
+\end{eqnarray}
+
+$\theta$ vetor de parâmetros.
+
+##Interpretação dos Parâmetros
+
+A interpretação dos parâmetros depende muito da questão de pesquisa. Se o pesquisador está interessado no efeito marginal sobre a variável dependente latente $(y_{i}^{*})$,
+\begin{eqnarray}
+\dfrac{\partial E(y_{i}^{*}|x_{i})}{\partial \mathbf{x}_{i,j}}=\boldsymbol{\beta_{j}}\ \textrm{ou}\ \dfrac{\partial E(y_{i}^{*}|y_{i}^{*}>0,x_{i})}{\partial \mathbf{x}_{i,j}}=\boldsymbol{\beta_{j}}[1-\lambda(b)^{2}-\lambda(b)]
+\end{eqnarray}
+
+No entanto, se o pesquisador está interessado no efeito marginal sobre o valor esperado dos valores observados, o efeito marginal é dado por,
+\begin{eqnarray}
+\dfrac{\partial E(y_{i}|x_{i})}{\partial \mathbf{x}_{i,j}}=\boldsymbol{\beta_{j}}\Phi\left(\dfrac{\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)
+\end{eqnarray}
+
+#
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.align='center'}
+# Simulated data 
+set.seed(1)
+x         <- sort(rnorm(100)+4)
+xb        <- -4 + 1*x 
+ystar     <- xb + rnorm(100) #(ystar=xbeta+ei)
+y         <- ystar
+y[ystar<0]<- 0
+
+# Conditional means
+Eystar <- xb
+Ey <- pnorm(xb/1)*xb+1*dnorm(xb/1)
+#Etrun<-xb+dnorm(xb/1)/(1-pnorm(xb/1))
+# Graph
+plot(x,ystar,ylab="y", pch=3,main = "Modelo de Regressão Tobit I")
+points(x,y, pch=1)
+lines(x,Eystar, lty=2,lwd=2)
+lines(x,Ey    , lty=1,lwd=2)
+#lines(x,Etrun    , lty=1,lwd=3)
+abline(h=0,lty=3)        # horizontal line at 0
+legend("topleft",c(expression(y^"*"),"y",expression(E(y^"*")),"E(y)"),
+       lty=c(NA,NA,2,1),pch=c(3,1,NA,NA),lwd=c(1,1,2,2))
+
+
+```
+
+***
+<p style="text-align: justify;">
+Um dos problemas da metodologia Tobit é considerar que a equação que nos diz se uma observação está no limite é a mesma equação que nos diz o valor da variável dependente. Isso nem sempre é real. Temos então o modelo de Heckman, também chamado de modelo Tobit tipo II ou modelo de seleção amostral.
+</p>
+
+#Modelo de Heckman ou Tobit tipo II
+
+O modelo de seleção amostral é representado pelo seguinte sistema de regressão:
+
+\begin{eqnarray}
+\nonumber y_{1,i}^{*} &=& x_{i}^{T}\beta +u_{1i}\\
+\nonumber y_{2,i}^{*} &=& z_{i}^{T}\gamma+u_{2i},
+\end{eqnarray}
+<p style="text-align: justify;">
+onde as respostas $y_{1i}^{*}$ e $y_{2i}^{*}$ são variáveis latentes, $x_{i}$ e $z_{i}$ são as covariáveis, $\beta \in \mathcal{R}^{p+1}$ e $\gamma\in \mathcal{R}^{q+1}$ são vetores de parâmetros, e os termos de erro seguem uma distribuição normal bivariada,
+</p>
+$$\left(
+\begin{array}{c}
+u_{1i}        \\
+u_{2i}
+\end{array}
+\right)\sim N\left\{\left(
+\begin{array}{c}
+0        \\
+0
+\end{array}
+\right),\left(
+\begin{array}{ll}
+\sigma^{2}         & \rho\sigma \\
+ \rho\sigma     & 1
+\end{array}
+\right)\right\},$$
+
+com variância $\sigma_{2}^{2}=1, \sigma_{1}^{2}=\sigma^{2}$ e correlação $\rho.$ $\sigma_{2}^{2}=1$ para assegurar a identificabilidade.
+
+***
+<p style="text-align: justify;">
+Observa-se uma indicadora $\delta_{i}$ quando a variável latente $y_{2i}^{*}$ é positiva e definimos o valor da variável $y_{i}=y_{1,i}^{*}$ se a indicadora é 1. Ou seja, assim podemos fazer:
+</p>
+
+
+\begin{eqnarray}
+\nonumber \delta_{i}=\left\{
+\begin{array}{cc}
+1,& \textrm{se}\ y_{2,i}^{*}>0,\\
+&\\
+0,& \textrm{se}\ y_{2,i}^{*}\leq 0  
+\end{array}
+\right.
+\end{eqnarray}
+
+\begin{eqnarray}
+\nonumber y_{i}=\left\{
+\begin{array}{cc}
+y_{1,i}^{*},             & \textrm{se}\ \delta_{i}=1,\\
+&\\
+\textrm{0},& \textrm{se}\ \delta_{i}=0 
+\end{array}
+\right.
+\end{eqnarray}
+
+Considerando o modelo descrito acima temos:
+\vspace{-0.5cm}
+\begin{eqnarray}
+E(y_{i}|y_{1,i}^{*}\ \textrm{é observado},\mathbf{x}_{i},\mathbf{z}_{i})&=&
+\mathbf{x}_{i}^{'}\boldsymbol{\beta} + \boldsymbol{\beta_{\lambda}}\left[\frac{\phi(\mathbf{z}_{i}^{'}\boldsymbol{\gamma})}{\Phi(\mathbf{z}_{i}^{'}\boldsymbol{\gamma})}\right] 
+\end{eqnarray}
+
+e,
+\vspace{-0.5cm}
+\begin{eqnarray}
+Var(y_{i}|y_{1,i}^{*}\ \textrm{é observado},\mathbf{x}_{i},\mathbf{z}_{i})&=&\sigma[1-\rho^{2}\delta(-\mathbf{z}_{i}^{'}\boldsymbol{\gamma})]
+\end{eqnarray}
+
+#
+<p style="text-align: justify;">
+Se os erros são independentes, então $$E(y_{i}|y_{1,i}^{*}\ \textrm{é observado},\mathbf{x}_{i},\mathbf{z}_{i})=\mathbf{x}_{i}^{'}\boldsymbol{\beta}$$ e o método de mínimos quadrados ordinários (MQO) nos dão estimativas consistentes de $\boldsymbol{\beta}$. No entanto, qualquer
+correlação entre os dois erros significa que a média truncada não é mais $\mathbf{x}_{i}^{'}\boldsymbol{\beta}$ e o MQO produz estimativas viesadas de $\boldsymbol{\beta},$ pois o fator $\rho\sigma\left[\frac{\phi(\mathbf{z}_{i}^{'}\boldsymbol{\gamma})}{\Phi(\mathbf{z}_{i}^{'}\boldsymbol{\gamma})}\right]$ é omitido e torna-se parte do termo de erro $u_{1,i}.$ O viés resultante é chamado de viés de seleção amostral ou, somente, viés de seleção.
+</p>
+#Estimação
+
+##Método de Máxima Verossimilhança
+<p style="text-align: justify;">
+Utilizando o pressuposto de normalidade bivariada, a função de verossimilhança é dada por:
+</p>
+\begin{eqnarray}
+\mathcal{L}(\theta|\mathbf{x}_{i},\mathbf{z}_{i})&=&\displaystyle \sum_{\delta_{i}=0} \ln \left[
+\Phi\left\{ \dfrac{\mathbf{z}_{i}^{'}\boldsymbol{\gamma}+\frac{\rho}{\sigma} (y_{1,i}-\mathbf{x}_{i}^{'}\boldsymbol{\beta})}{\sqrt{1-\rho^{2}}}\right\}\right]\\
+\nonumber &+&\sum_{\delta_{i}=1} \ln \left\{ \sigma^{-1}\phi\left(\dfrac{y_{1,i}-\mathbf{x}_{i}^{'}\boldsymbol{\beta}}{\sigma}\right)\right\}\\
+\nonumber &+&\sum_{\delta_{i}=1} \ln \left(\Phi(-\mathbf{z}_{i}^{'}\boldsymbol{\gamma})\right)
+\end{eqnarray}
+onde $\theta$ é um vetor de parâmetros.
+<p style="text-align: justify;">
+O estimador obtido é consistente, assintoticamente normal e eficiente, mas tem vários inconvenientes. Primeiro de tudo é não-linear e, obviamente, requer métodos numéricos iterativos. É muito caro do ponto de vista computacional, apesar de ser possível implementa-lo, existe o problema da não linearidade, a função de verossimilhança também tem máximos locais (Olsen 1982), o que requer um bom ponto de partida para o algoritmo numérico.
+</p>
+#Dois passos de Heckman
+<p style="text-align: justify;">
+Heckman propôs um processo simples de duas etapas que envolve a estimativa de um probit padrão e um modelo de regressão linear. Os dois passos são:
+</p>
+<p style="text-align: justify;">
+* Estima-se a equação probit por máxima verossimilhança para obter uma estimativa de $\boldsymbol{\gamma}.$ Para cada observação da amostra selecionada, computamos:
+\begin{eqnarray}
+\hat{\lambda}=\frac{\phi(\mathbf{z}_{i}^{'}\hat{
+    \boldsymbol{\gamma}})}{
+    \Phi(\mathbf{z}_{i}^{'}\hat{\boldsymbol{\gamma}})}\ \textrm{e}\ \hat{\delta}_{i}=\hat{\lambda}_{i}(\hat{\lambda}_{i}-\mathbf{z}_{i}^{'}
+    \hat{\boldsymbol{\gamma}}).
+\end{eqnarray}
+</p>
+* Estima-se $\boldsymbol{\beta},\ \boldsymbol{\beta}_{\lambda}=\rho\sigma, \rho$ e $\sigma$ por mínimos quadrados a partir da equação:
+\begin{eqnarray}
+\displaystyle y_{i}=\mathbf{x}_{i}^{'}\boldsymbol{\beta} + \boldsymbol{\beta_{\lambda}}\hat{\lambda_{i}}+\varepsilon_{i}
+\end{eqnarray}
+
+***
+
+Vejamos alguns Exemplos:
+
+***
+
+#MROZ 1987
+
+<p style="text-align: justify;">
+De acordo com @hill2008principles, em um problema de estimação de parâmetros, se os dados são obtidos por amostragem aleatória, métodos de estimação, clássicos, tais como mínimos quadrados, funcionam bem. No entanto, se os dados são obtidos por um procedimento de amostragem que não é aleatório, os procedimentos normais não funcionam adequadamente. Geralmente enfrentamos tais problemas na amostragem. Uma ilustração famosa vem de economia do trabalho. Se quisermos estudar os determinantes dos salários das mulheres casadas, nos deparamos com um problema de seleção da amostra. Pois, ao recolher dados sobre as mulheres casadas, e perguntar-lhes o salário que ganham, muitas vão responder que são donas de casa. Nós só observamos os dados sobre salários de mercado quando a mulher escolhe entrar na força de trabalho. Uma estratégia é ignorar as mulheres que são donas de casa, omiti-las a partir da amostra, em seguida, usar mínimos quadrados para estimar a equação de salários para aquelas que trabalham. Esta estratégia é falha, a razão para a falha é que a amostra não é uma amostra aleatória, uma vez que os dados observados, ao omitir as mulheres que são donas de casa, são selecionados por um processo sistemático.
+</p>
+
+<p style="text-align: justify;">
+O primeiro exemplo é retirado do livro de @hill2008principles, vamos reconsiderar a análise dos salários recebidos por mulheres casadas usando o conjunto de dados obtidos de @mroz1987sensitivity. Na amostra de 753 mulheres casadas, 428 são empregadas no mercado formal e recebem salários diferentes de zero. Vejam uma parte do conjunto de dados:
+</p>
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+setwd("~/GitHub/Modelos de Heckman/Modelo-de-Heckman")
+#install.packages("Rtools")
+#devtools::install_github("hadley/readxl")
+library(readxl)
+dados <- read_excel("~/GitHub/Modelos de Heckman/Modelo-de-Heckman/mroz_z.xls",col_names = TRUE, col_types = NULL)
+dados[423:433,c(5,6,19,23,14,1,7,21)]
+attach(dados)
+#tail(MEPS2001)
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+par(mfrow=c(1,2))
+#library(stringr)
+#dados$wage<-as.numeric(dados$wage)
+#wage2<- str_replace(dados$wage, pattern="NA", replacement= 0)
+#wage2<-as.numeric(wage2)
+#dados$wage2
+#dados$lwage<-as.numeric(dados$lwage)
+#lwage2<- str_replace(dados$lwage, pattern="NA", replacement= 0)
+#lwage2<-as.numeric(lwage2)
+#dados$lwage2
+hist(wage,ylim=c(0,200),xlim = c(-1,30),xlab = "Salário de mulheres com emprego formal", ylab = "Frequência",main = "Dados MROZ")
+hist(lwage,ylim=c(0,150),xlim = c(-3,5),xlab = "Log do Salário de mulheres com emprego formal", ylab = "Frequência",main = "Dados MROZ")
+```
+<p style="text-align: justify;">
+Primeiro, vamos estimar uma equação simples para o salário, explicando $ln(salário)$ como uma função da educação, EDUC, e anos de experiência no mercado de trabalho (EXPER), utilizando as 428 mulheres que têm salários positivos. O modelo é:
+</p>
+$$ln(wage)_{i}=\beta_{0}+\beta_{1}Educ+\beta_{2}exper+\epsilon_{i},$$ 
+
+com, $\epsilon\sim N(0,1).$
+
+as estimativas dos parâmetros são:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+lreg<-lm(lwage~educ+exper,data = dados[dados$inlf==1,])
+summary(lreg)
+```
+
+<p style="text-align: justify;">
+O retorno estimado para a educação é cerca de 11%, e os coeficientes estimados de educação e experiência são estatisticamente significativos. 
+</p>
+
+***
+
+Agora vamos ajustar o modelo:
+</p>
+\begin{eqnarray*}
+  lwage_{i} &=& \beta_{0} + \beta_{1}educ + \beta_{2}exper + u_{1}
+\end{eqnarray*}  
+
+e assumimos que o log do salário$(lwage)$ é observado se:
+
+\begin{eqnarray*}
+\beta_{0}+\beta_{1}Age+\beta_{2}Educ_{i}+\beta_{3}kids_{i}+\beta_{4}mtr+u_{2}>0,
+\end{eqnarray*}
+onde $u_{1}$ e $u_{2}$ são correlacionados.
+
+##Ajuste com função Glm e lm do R
+<p style="text-align: justify;">
+O procedimento Heckit (seleção amostral) começa por estimar um modelo probit de participação na força de trabalho. Como variáveis explicativas usamos a idade da mulher, seus anos de escolaridade, uma variável de indicador para saber se ela tem filhos, e a taxa de imposto marginal que ela iria pagar sobre rendimentos se empregada. O modelo probit é dado por:
+</p>
+\begin{eqnarray*}
+  inlf_{i} &\sim& Binomial (n, \pi_i)\\
+  g(\pi_i) &=& \beta_{0}+\beta_{1}Age+\beta_{2}Educ_{i}+\beta_{3}kids_{i}+\beta_{4}mtr
+\end{eqnarray*}
+
+<p style="text-align: justify;">
+Sendo $inlf$ a variável resposta binária, $Age_{i},Educ_{i},kids_{i}$ e $mtr_{i}$ as i-ésimas realizações das respectivas variáveis explicativas $Age,Educ,kids$ e $mtr,$ respectivamente, e $g(\pi_i)=\Phi^{-1}(\pi_{i})$ a função de ligação probit. Como houve indivíduos com o mesmo conjunto de covariáveis considera-se o número de repetições $n=428$ para a distribuição de $inlf_{i}.$
+</p>
+
+as estimativas dos parâmetros são:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Modelo Probit
+fit1<-glm(inlf~age+educ+kids+mtr,family=binomial(link=probit),data=dados)
+summary(fit1)
+```
+<p style="text-align: justify;">
+Como esperado, os efeitos da idade, a presença de crianças, e as perspectivas de impostos mais altos reduzem significativamente a probabilidade de que uma mulher se junte à força de trabalho, enquanto a educação aumenta a probabilidade. Utilizando os coeficientes estimados calculamos a razão inversa de Mills para as 428 mulheres com salários de mercado. 
+</p>
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(sampleSelection)
+dados$IMR <- invMillsRatio(fit1)$IMR1#Criar uma nova coluna com a covariável Razão Inversa de Mills 
+dados[423:433,c(5,6,19,23,14,1,7,21,32)]
+```
+
+<p style="text-align: justify;">
+Este é então incluído na equação de regressão múltipla de salários e aplicado mínimos quadrados para obter as seguintes estimativas: 
+</p>
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Modelo de Regressão Linear Simples com wage>0
+fit2<- lm(lwage~educ+exper+IMR, data = dados[dados$inlf==1,])
+summary(fit2)
+```
+<p style="text-align: justify;">
+Notemos que o coeficiente estimado da razão inversa de Mills é estatisticamente significativo, o que implica que existe um viés de seleção presente nos resultados de quadrados mínimos da primeira equação de regressão sem a covariável IMR. Além disso, o retorno salárial estimado para a educação diminuiu de 11% para aproximadamente 6%. 
+</p>
+<p style="text-align: justify;">
+Outra forma de proceder os calculos acima é utilizar o método de Máxima Verossimilhança ou o método de duas etapas de Heckman para estimar todos os parâmetros do modelo de regressão via pacote _sampleSelection_ do *R*. Vejamos as saídas:
+</p>
+
+***
+
+##Ajuste com o pacote Sample Selection
+###Processo de duas etapas
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+
+library("sampleSelection")
+# Two-step estimation
+fit3<-heckit( inlf~age+educ+kids+mtr,
+              lwage~educ+exper, dados)
+summary(fit3)
+
+```
+<p style="text-align: justify;">
+Note neste caso a diferença entre as t-estatísticas. Os valores anteriores das t-estatísticas, calculados via função glm e lm são baseados em erros padrão como normalmente calculado pelo uso da regressão de mínimos quadrados. Os habituais erros padrão não levam em conta o fato de que a razão inversa de Mills é um valor estimado. Assim, o pacote _sampleSelection_ corrige os erros padrão ao levar em conta a estimativa do primeiro estágio probit, estes são usados para construir as t-estatísticas ajustadas. Como podemos ver as t-estatísticas ajustadas são um pouco menores na saída do _sampleSelection_, indicando que os erros padrão ajustados são um pouco maiores do que os da saída do glm e lm.
+</p>
+<p style="text-align: justify;">
+É preferível estimar o modelo completo, tanto a equação de seleção e a equação de interesse, em conjunto por máxima verosimilhança. Pois, os erros padrão com base no procedimento de máxima verossimilhança são menores do que aqueles gerados pelo método de estimação de dois passos.
+</p>
+###Método de Máxima Verossimilhança
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+# ML estimation
+fit4<-selection(inlf~age+educ+kids+mtr,
+                lwage~educ+exper, dados)
+summary(fit4)
+```
+
+Neste caso a estimativa do parâmetro da razão inversa de Mills é:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+IMR<-coef(summary(fit4))["rho",1]*coef(summary(fit4))["sigma",1]
+IMR
+#res<-fit4$estimate
+#IMR<-res[9]*res[10]
+#IMR
+```
+
+***
+
+## Ajuste com o pacote SSMROB
+
+```{r,echo=TRUE,cache=FALSE,message=FALSE}
+library(ssmrob)
+#Equação de seleção que será ajustada via modelo probit
+ selectEq <- inlf~age+educ+kids+mtr
+#Equação de regressão que será ajustada via modelo linear simples
+outcomeEq <- lwage~educ+exper
+fit5<-heckitrob(outcomeEq,selectEq,control=heckitrob.control(tcc=3.2,weights.x1="robCov"))
+summary(fit5)
+```
+
+***
+
+#MEPS 2001 Sem a Covariável Rendimento
+
+<p style="text-align: justify;">
+O artigo de @marchenko2012heckman considerou os dados sobre os gastos 
+ambulatoriais do `Medical Expenditure Panel Survey 2001 (MEPS2001)`, analisadas por Cameron e Trivedi (2010). MEPS é a fonte de dados sobre o custo e a utilização de cuidados de saúde e cobertura de seguro de saúde mais completa dos Estados Unidos, segundo a Agência de Investigação de Saúde e Qualidade (AHRQ) dos EUA. A amostra é restrita a apenas aqueles indivíduos que estão cobertos por seguros privados, com idades entre 21 e 64 anos. Os dados consistem de 3328 observações, dos quais 526 (15,8%) correspondem aos valores de despesas zero. O conjunto de dados inclui diversas variáveis explicativas, tais como idade, sexo, anos de escolaridade, entre outros. 
+</p>
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(ssmrob)
+data(MEPS2001)
+attach(MEPS2001)
+#head(MEPS2001)
+MEPS2001[1:10,c(1,2,4,8,18,22,20,16,17,21)]
+#tail(MEPS2001)
+```
+<p style="text-align: justify;">
+Vejam a distribuição dos dados brutos de despesas ambulatoriais e dos dados de despesas ambulatoriais logaritmados:
+</p>
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+library(ssmrob)
+#Carregando o conjunto de dados MEPS2001 - dados de despesas ambulatoriais
+data(MEPS2001)
+attach(MEPS2001)
+par(mfrow=c(1,2))
+hist(ambexp,ylim = c(0,3500),xlim=c(0,20000) ,xlab = "Despesas Ambulotariais", ylab = "Frequência",main = "Dados do MEPS 2001")
+hist(lnambx,ylim = c(0,800),xlim=c(0,12), xlab = "Log das Despesas Ambulotariais", ylab = "Frequência",main = "Dados do MEPS 2001")
+```
+
+<p style="text-align: justify;">
+Antes de dar sequência com a aplicação dos modelos de seleção amostral, considere uma regressão linear múltipla relacionando os gastos ambulotariais com as diversas outras variáveis disponíveis no banco de dados e supondo erro aleatório com distribuição normal, ou seja, considere o modelo:
+</p>
+$$lnambx_{i}=\beta_{0}+\beta_{1}Age+\beta_{2}female+\beta_{3}Educ+\beta_{4}blhisp+\beta_{5}totchr+\beta_{6}ins+\epsilon_{i},$$ 
+
+com, $\epsilon\sim N(0,1).$
+
+as estimativas dos parâmetros são:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+lreg<-lm(lnambx~age+female+educ+blhisp+totchr+ins)
+summary(lreg)
+```
+<p style="text-align: justify;">
+Podemos ver que todos os parâmetros são altamente significativos, esse ajuste foi realizado com os dados completos incluindo os valores zero. Poderíamos pensar que estes não devem fazer parte do ajuste e retirá-los, neste caso teríamos uma mudança significativa no ajuste:
+</p>
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+lreg<-lm(lnambx~age+female+educ+blhisp+totchr+ins,data = MEPS2001[ MEPS2001$dambexp == 1, ] )
+summary(lreg)
+```
+<p style="text-align: justify;">
+Mas o fato é que não podemos deixar de considerar as pessoas que possuem gasto zero com despesas ambulatoriais, pois do contrário, nossa amostra não seria obtida de forma aleatória, ou seja, caso não consideremos essa parte da amostragem teríamos um problema de seleção amostral. Assim, a disposição para gastar será relacionada com algumas covariáveis por meio de um modelo probit e posteriormente iremos criar uma nova covariável (razão inversa de Mills) e iremos analisar o modelo de regressão de interesse acrescido desta variável. Dessa forma, vamos utilizar o modelo de seleção amostral clássico de Heckman para analisar esses dados. Como a distribuição dos gastos é altamente viesada, a análise foi realizada utilizando a escala logarítmica. 
+</p>
+
+***
+
+Agora vamos ajustar o modelo:
+</p>
+\begin{eqnarray*}
+  lnambx_{i} &=& \beta_{0}+\beta_{1}Age+\beta_{2}female_{i}+\beta_{3}educ_{i}+\beta_{4}blhisp+\beta_{5}totchr+\beta_{6}ins + u_{1}
+\end{eqnarray*}  
+
+e assumimos que o log das despesas ambulatoriais $(lnambx)$ é observado se:
+
+\begin{eqnarray*}
+\beta_{0}+\beta_{1}Age+\beta_{2}female_{i}+\beta_{3}educ_{i}+\beta_{4}blhisp+\beta_{5}totchr+\beta_{6}ins+u_{2}>0,
+\end{eqnarray*}
+onde $u_{1}$ e $u_{2}$ são correlacionados.
+
+## Ajuste com as funções glm e lm do R
+
+Primeiro analisamos os dados utilizando as funções _glm_ e _lm_ do *R*.
+
+O modelo probit utlizado foi:
+
+\begin{eqnarray*}
+  dambexp_{i} &\sim& Binomial (n, \pi_i)\\
+  g(\pi_i) &=& \beta_{0}+\beta_{1}Age+\beta_{2}female_{i}+\beta_{3}educ_{i}+\beta_{4}blhisp+\beta_{5}totchr+\beta_{6}ins
+\end{eqnarray*}
+
+Os parâmetros estimados são:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(aod)
+#Modelo probit
+fit1<-glm( dambexp ~ age+female+educ+blhisp+totchr+ins, family = binomial(link = "probit"),data=MEPS2001)
+summary(fit1)
+```
+
+Com os parâmetros do probit estimado foi possível encontrar a razão inversa de Mills.
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+MEPS2001$IMR <- invMillsRatio(fit1)$IMR1#Criar uma nova coluna com a covariável Razão Inversa de Mills 
+MEPS2001[1:10,c(1,2,4,8,18,22,21,20,23)]
+```
+
+Assim, a covariável $IMR$ foi utilizada no ajuste da regressão de interesse:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+fit2 <- lm( lnambx ~ age+female+educ+blhisp+totchr+ins + IMR,
+                data = MEPS2001[ MEPS2001$dambexp == 1, ] )
+summary(fit2)
+#wald.test(b = coef(fit3), Sigma = vcov(fit3), Terms = 8)
+```
+<p style="text-align: justify;">
+Notemos que o parâmetro que acompanha a covariável $IMR$ foi não significativo e poderíamos assumir que não há viés de seleção amostral e desconsiderar os valores iguais a zero para a variável gasto com despesas ambulotariais. O que implica que gastar com despesas ambulatoriais  não está relacionado com a decisão de gastar e podem ser analisados separadamente por meio de Mínimos Quadrados Ordinários. Esta conclusão parece não plausível. Como observado por @cameron2009microeconomics, a suposição de normalidade dos erros é muito suspeita para esses dados. O que é possível de se verificar por meio da visualização do histograma do log das despesas apresentado anteriormente e devido a não significância da covariável $IMR$.
+</p>
+<p style="text-align: justify;">
+Esse mesmo ajuste pode ser feito através do pacote _sampleSelection_ usando o método de dois passos e máxima verossimilhança:
+</p>
+
+***
+
+##Ajuste com o pacote Sample Selection
+<p style="text-align: justify;">
+No processo de duas etapas do pacote sample selection, manteve-se o resultado anterior com a não significância do parâmetro que acompanha a covariável $IMR.$
+</p>
+###Processo de duas etapas
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+
+library("sampleSelection")
+# Two-step estimation
+fit3<-heckit( dambexp ~ age+female+educ+blhisp+totchr+ins,
+                 lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001 )
+summary(fit3)
+
+```
+
+Mesmo resultado utilizando máxima verossimilhança.
+
+
+###Método de Máxima Verossimilhança
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+# ML estimation
+fit4<-selection( dambexp ~ age+female+educ+blhisp+totchr+ins,
+                    lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001)
+summary(fit4)
+```
+
+Neste caso a estimativa do parâmetro da razão inversa de Mills é:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+IMR<-coef(summary(fit4))["rho",1]*coef(summary(fit4))["sigma",1]
+IMR
+#res<-fit4$estimate
+#IMR<-res[15]*res[16]
+#IMR
+```
+<p style="text-align: justify;">
+Poderíamos então assumir erroneamente que não há viés de seleção amostral, mesmo que essa suposição seja estranha dada a possivel relação das variáveis, mas foi o resultado apresentando pelos ajustes de dois passos de Heckman e máxima verossimilhança. Porém, outro pacote que ajusta modelos de seleção amostral utilizando os dois passos de Heckman corrige um pouco esse resultado, apesar de continuar assumindo distribuição normal bivariada para os erros do modelo o ajuste é mais sensível no sentido de detectar o viés de seleção amostral. Vejamos a análise com esse pacote.
+</p>
+
+***
+
+## Ajuste com o pacote SSMROB
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Equação de seleção que será ajustada via modelo probit
+selectEq <- dambexp ~ age+female+educ+blhisp+totchr+ins
+#Equação de regressão que será ajustada via modelo linear simples
+outcomeEq <- lnambx ~ age+female+educ+blhisp+totchr+ins
+fit5<-heckitrob(outcomeEq,selectEq,control=heckitrob.control(tcc=3.2,weights.x1="robCov"))
+summary(fit5)
+```
+
+<p style="text-align: justify;">
+Se considerarmos os erros padrão, vemos que o erro padrão da estimativa robusta $(0,2593)$ é menor do que a do estimador clássico $(0,2907).$ O valor de p do teste de viés de seleção robusto é $p=0.009$, o que leva à conclusão da presença de viés de seleção amostral mesmo o estimador clássico sugerindo a ausência de viés.
+</p>
+
+***
+<p style="text-align: justify;">
+Os mesmos dados foram utilizados agora acrescentando a covariável rendimento na equação de seleção, impondo a restrição de exclusão do modelo, embora o uso da renda para esta finalidade é discutível. Todos os fatores considerados são fortes preditores da decisão de gastar. Notemos que os resultados quanto a significância do parâmetro que acompanha a covariável $IMR$ foram os mesmos.
+</p>
+
+***
+
+#Meps 2001 Com a Covariável Rendimento
+
+##Ajuste com as funções glm e lm do R
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Modelo probit
+fit1<-glm( dambexp ~ age+female+educ+blhisp+totchr+ins+income, family = binomial(link = "probit"),data=MEPS2001)
+summary(fit1)
+```
+
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+MEPS2001$IMR <- invMillsRatio(fit1)$IMR1#Criar uma nova coluna com a covariável Razão Inversa de Mills 
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Modelo Linear Simples com razão de Mill's
+fit2 <- lm( lnambx ~ age+female+educ+blhisp+totchr+ins + IMR,
+                data = MEPS2001[ MEPS2001$dambexp == 1, ] )
+summary(fit2)
+#wald.test(b = coef(fit3), Sigma = vcov(fit3), Terms = 8)
+```
+
+***
+
+##Ajuste com o pacote Sample Selection
+
+###Processo de duas etapas
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library("sampleSelection")
+# Two-step estimation
+fit3<-heckit( dambexp ~ age+female+educ+blhisp+totchr+ins+income,
+               lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001 )
+summary(fit3)
+```
+
+###Método de Máxima Verossimilhança
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+# ML estimation
+fit4<-selection( dambexp ~ age+female+educ+blhisp+totchr+ins+income,
+                    lnambx ~ age+female+educ+blhisp+totchr+ins, MEPS2001)
+summary(fit4)
+```
+
+Neste caso a estimativa do parâmetro da razão inversa de Mills é:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+IMR<-coef(summary(fit4))["rho",1]*coef(summary(fit4))["sigma",1]
+IMR
+#res<-fit4$estimate
+#IMR<-res[16]*res[17]
+#IMR
+```
+
+***
+
+##Ajuste com o pacote SSMROB
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Equação de seleção que será ajustada via modelo probit
+selectEq <- dambexp ~ age+female+educ+blhisp+totchr+ins+income
+#Equação de regressão que será ajustada via modelo linear simples
+outcomeEq <- lnambx ~ age+female+educ+blhisp+totchr+ins
+fit5<-heckitrob(outcomeEq,selectEq,control=heckitrob.control(tcc=3.2,weights.x1="robCov"))
+summary(fit5)
+```
+
+#Womenwk - Conjunto de dados do Stata
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(haven)
+dados <- read_dta("~/GitHub/Modelos de Heckman/Modelo-de-Heckman/Conjunto_dados/womenwk.dta")
+attach(dados)
+head(dados)
+```
+
+
+<p style="text-align: justify;">
+Considere o ajuste de um modelo de regressão linear simples considerando somente as pessoas empregadas para analisar o salário em função da educação e da idade. 
+</p>
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Regressão linear simples usando Mínimos Quadrados
+fit1<-lm(wage~education+age)
+summary(fit1)
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+wage[is.na(wage)]<-0
+wage2<-wage
+indicadora<-ifelse(wage>0,1,0)
+dados$wage2 <- wage2#Criar uma nova coluna com a covariável wage substituindo NA por zero 
+dados$indicadora<-indicadora
+str(dados)
+```
+
+Agora o ajuste considerando todas as pessoas, inclusive as que não trabalham:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Regressão linear simples usando Mínimos Quadrados
+fit2<-lm(wage2~education+age)
+summary(fit2)
+```
+
+<p style="text-align: justify;">
+Vamos supor agora que o salário por hora é uma função da escolaridade e idade, ao passo que a probabilidade de trabalhar (a probabilidade de o salário ser observado) é uma função do estado civil, o número de crianças em casa, e (implicitamente) o salário ( que é estimado através da inclusão de idade e educação, que pensamos ser o que determinam o salário).
+</p>
+
+<p style="text-align: justify;">
+Heckman assume que o salário é a variável dependente e que a primeira lista de variáveis (educ e idade) são os determinantes do salário. As variáveis especificadas na opção de seleção (casado, crianças, educ, e idade) são assumidos para determinar se a variável dependente (a equação de regressão) é observada. Assim, ajustamos o modelo:
+</p>
+\begin{eqnarray*}
+  wage_{i} &=& \beta_{0} + \beta_{1}educ + \beta_{2}age + u_{1}
+\end{eqnarray*}  
+
+e assumimos que o salário$(wage)$ é observado se:
+
+\begin{eqnarray*}
+\beta_{0}+\beta_{1}married+\beta_{2}children_{i}+\beta_{3}educ_{i}+\beta_{4}age+u_{2}>0,
+\end{eqnarray*}
+onde $u_{1}$ e $u_{2}$ são correlacionados.
+
+##Ajuste com as funções *glm* e *lm* do *R*
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+# Ajuste com as funções glm e lm do R
+#Modelo probit
+fit3<-glm(indicadora ~ married+children+education+age, family = binomial(link = "probit"),data=dados)
+summary(fit3)
+
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(sampleSelection)
+dados$IMR <- invMillsRatio(fit3)$IMR1#Criar uma nova coluna com a covariável Razão Inversa de Mills 
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Modelo Linear Simples com razão de Mill's
+fit4 <- lm(wage2 ~ education+age + IMR,
+           data = dados[dados$wage2>0, ] )
+summary(fit4)
+```
+
+
+##Ajuste com o pacote *sampleSelection*
+
+###Processo de duas etapas
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Equação de seleção que será ajustada via modelo probit
+selectEq <- indicadora~married+children+education+age
+#Equação de regressão que será ajustada via modelo linear simples
+outcomeEq <- wage2 ~ education+age
+fit5<-heckit(selectEq,outcomeEq,dados)
+summary(fit5)
+```
+
+###Método de Máxima Verossimilhança
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+#Estimação utilizando método de Máxima Verossimilhança do pacote sample selection
+fit6<-selection(indicadora ~ married+children+education+age,
+                wage2 ~ education+age)
+summary(fit6)
+```
+
+A estimativa do parâmetro que acompanha a covariável razão inversa de Mills é:
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+IMR<-coef(summary(fit6))["rho",1]*coef(summary(fit6))["sigma",1]
+IMR
+```
+
+##Ajuste com o pacote *SSMROB*
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE}
+library(ssmrob)
+#Equação de seleção que será ajustada via modelo probit
+selectEq <- indicadora ~ married+children+education+age
+#Equação de regressão que será ajustada via modelo linear simples
+outcomeEq <- wage2 ~ education+age
+fit7<-heckitrob(outcomeEq,selectEq,control=heckitrob.control(tcc=3.2,weights.x1="robCov"))
+summary(fit7)
+```
+
+#Referências
