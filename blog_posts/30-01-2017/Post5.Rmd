@@ -36,7 +36,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ##-------------------------------------------
 ##   OBTENDO E DESCOMPACTANDO O SHAPEFILE
 ##-------------------------------------------
-ender = "~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/Shapefiles"
+ender = "~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/Shapefiles"
  ## endereço de trabalho
 setwd(ender) ## set o endereço de trabalho que receberá os arquivos
 
@@ -53,7 +53,7 @@ unzip(basename(url0)) ## extrai os arquivos
 ##-------------------------------------------
 library("rgdal");
 #endereço da subpasta
-ender <- "~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/Shapefiles/MG"
+ender <- "~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/Shapefiles/MG"
  ## endereço de trabalho
 setwd(ender) ## set o endereço de trabalho que receberá os arquivos
 pb_poligonos_rgdal <- readOGR(dsn=path.expand(ender), layer="31MUE250GC_SIR", verbose=FALSE, stringsAsFactors=FALSE);
@@ -67,10 +67,10 @@ pb_poligonos_rgdal <- readOGR(dsn=path.expand(ender), layer="31MUE250GC_SIR", ve
 #  Temp = c(23, 34, 40))
 
 
-#setwd("~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/MG")
+#setwd("~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/MG")
 #Carregar o shapefile
 #library("rgdal");
-#pb_poligonos_rgdal <- readOGR(dsn=path.expand("~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/MG"), layer="31MUE250GC_SIR", verbose=FALSE, stringsAsFactors=FALSE);
+#pb_poligonos_rgdal <- readOGR(dsn=path.expand("~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/MG"), layer="31MUE250GC_SIR", verbose=FALSE, stringsAsFactors=FALSE);
 ```
 
 

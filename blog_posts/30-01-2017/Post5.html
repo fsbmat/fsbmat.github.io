@@ -15,7 +15,7 @@ layout: page
 
 <meta name="author" content="Fernando de Souza Bastos" />
 
-<meta name="date" content="2017-01-29" />
+<meta name="date" content="2017-01-30" />
 
 <title>Exemplos de criação de mapas no R</title>
 
@@ -172,7 +172,7 @@ $(document).ready(function () {
 <h1 class="title toc-ignore">Exemplos de criação de mapas no R</h1>
 <h3 class="subtitle"><em>Lugares que me interessam - Post em construção</em></h3>
 <h4 class="author"><em>Fernando de Souza Bastos</em></h4>
-<h4 class="date"><em>2017-01-29</em></h4>
+<h4 class="date"><em>2017-01-30</em></h4>
 
 </div>
 
@@ -183,7 +183,7 @@ $(document).ready(function () {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##-------------------------------------------
 ##   OBTENDO E DESCOMPACTANDO O SHAPEFILE
 ##-------------------------------------------
-ender =<span class="st"> &quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/Shapefiles&quot;</span>
+ender =<span class="st"> &quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/Shapefiles&quot;</span>
  ## endereço de trabalho
 <span class="kw">setwd</span>(ender) ## set o endereço de trabalho que receberá os arquivos
 
@@ -200,7 +200,7 @@ if (!<span class="kw">file.exists</span>(<span class="kw">basename</span>(url0))
 ##-------------------------------------------
 <span class="kw">library</span>(<span class="st">&quot;rgdal&quot;</span>);
 <span class="co">#endereço da subpasta</span>
-ender &lt;-<span class="st"> &quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/Shapefiles/MG&quot;</span>
+ender &lt;-<span class="st"> &quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/Shapefiles/MG&quot;</span>
  ## endereço de trabalho
 <span class="kw">setwd</span>(ender) ## set o endereço de trabalho que receberá os arquivos
 pb_poligonos_rgdal &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn=</span><span class="kw">path.expand</span>(ender), <span class="dt">layer=</span><span class="st">&quot;31MUE250GC_SIR&quot;</span>, <span class="dt">verbose=</span><span class="ot">FALSE</span>, <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>);
@@ -214,10 +214,10 @@ pb_poligonos_rgdal &lt;-<span class="st"> </span><span class="kw">readOGR</span>
 <span class="co">#  Temp = c(23, 34, 40))</span>
 
 
-<span class="co">#setwd(&quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/MG&quot;)</span>
+<span class="co">#setwd(&quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/MG&quot;)</span>
 <span class="co">#Carregar o shapefile</span>
 <span class="co">#library(&quot;rgdal&quot;);</span>
-<span class="co">#pb_poligonos_rgdal &lt;- readOGR(dsn=path.expand(&quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/MG&quot;), layer=&quot;31MUE250GC_SIR&quot;, verbose=FALSE, stringsAsFactors=FALSE);</span></code></pre></div>
+<span class="co">#pb_poligonos_rgdal &lt;- readOGR(dsn=path.expand(&quot;~/GitHub/webpage/fsbmat.github.io/blog_posts/30-01-2017/MG&quot;), layer=&quot;31MUE250GC_SIR&quot;, verbose=FALSE, stringsAsFactors=FALSE);</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Separar os dados do shape num data frame</span>
 pb_dados &lt;-<span class="st"> </span><span class="kw">slot</span>(<span class="dt">object=</span>pb_poligonos_rgdal, <span class="dt">name=</span><span class="st">&quot;data&quot;</span>);
 <span class="kw">print</span>( pb_dados[<span class="dv">840</span>:<span class="dv">853</span>, <span class="dv">1</span>:<span class="dv">2</span>] );</code></pre></div>

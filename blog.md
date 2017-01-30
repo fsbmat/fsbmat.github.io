@@ -60,7 +60,7 @@ Neste post faço uma apresentação de Modelos com Variáveis Dependentes Limita
 ***
 
 <center><font size="6" color="#76asaf">
-<a href="/blog_posts/28-01-2017/post3">
+<a href="/blog_posts/30-01-2017/Post5">
 <b>Quinto post do Blog</b>
 </a></font></center>
 
@@ -68,7 +68,7 @@ Neste post faço uma apresentação de Modelos com Variáveis Dependentes Limita
 
 **29-01-2017 - Fernando de Souza Bastos:**
 
-Este post está incompleto, apresento algumas coisas sobre mapas no R. [[Leia mais]](/blog_posts/28-01-2017/post5)
+Este post está incompleto, apresento algumas coisas sobre mapas no R. [[Leia mais]](/blog_posts/30-01-2017/Post5)
 
 
 ***
