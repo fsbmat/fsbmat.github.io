@@ -57,5 +57,19 @@ Neste post faço uma aplicação do modelo de Heckman a alguns banco de dados co
 
 Neste post faço uma apresentação de Modelos com Variáveis Dependentes Limitadas. O mesmo pode ser visualizado em formato slidy do Rmarkdown [[Leia mais]](https://rawgit.com/fsbmat/fsbmat.github.io/master/blog_posts/19-10-2016/post4.html) ou no formato post-blog [[Leia mais]](/blog_posts/19-10-2016/VDL_Modelos_Regressao) ou no formato pdf, porém neste caso sem as aplicações [[Leia mais]](https://rawgit.com/fsbmat/Modelo-de-Heckman/master/Apresentacao/Apresentacao2/Seminario2B.pdf)
 
+***
 
+<center><font size="6" color="#76asaf">
+<a href="/blog_posts/28-01-2017/post3">
+<b>Quinto post do Blog</b>
+</a></font></center>
+
+***
+
+**29-01-2017 - Fernando de Souza Bastos:**
+
+Este post está incompleto, apresento algumas coisas sobre mapas no R. [[Leia mais]](/blog_posts/28-01-2017/post5)
+
+
+***
 
