@@ -1,0 +1,113 @@
+---
+title: "Exemplos de criação de mapas no R"
+author: "Fernando de Souza Bastos"
+date: "`r Sys.Date()`"
+fontsize: "20pt"
+output:
+  html_document:
+    fig_caption: yes
+    force_captions: yes
+    highlight: pygments
+    toc: yes
+    #Sumário flutuante
+    #toc_float: true
+    #numerar seções
+    number_sections: true
+    #Mostrar ou esconder os códigos (show ou hide)
+    code_folding: hide
+    #Diversos modelos de documentos ver outros em http://bootswatch.com/
+    theme: united
+#bibliography: referencia.bib    
+---
+
+***
+
+```{r setup, include=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<p style="text-align: justify;">
+
+</p>
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+
+##-------------------------------------------
+##   OBTENDO E DESCOMPACTANDO O SHAPEFILE
+##-------------------------------------------
+ender = "~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/Shapefiles"
+ ## endereço de trabalho
+setwd(ender) ## set o endereço de trabalho que receberá os arquivos
+
+## site do shapefile
+url0  =
+  'ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2015/UFs/MG/MG.zip'
+
+## faz o download do shapefile
+if (!file.exists(basename(url0))) download.file(url0, dest=basename(url0), mode = "wb")
+unzip(basename(url0)) ## extrai os arquivos
+
+##-------------------------------------------
+##         LENDO O SHAPEFILE
+##-------------------------------------------
+library("rgdal");
+#endereço da subpasta
+ender <- "~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/Shapefiles/MG"
+ ## endereço de trabalho
+setwd(ender) ## set o endereço de trabalho que receberá os arquivos
+pb_poligonos_rgdal <- readOGR(dsn=path.expand(ender), layer="31MUE250GC_SIR", verbose=FALSE, stringsAsFactors=FALSE);
+
+##-------------------------------------------
+##         SEPARANDO ALGUNS MUNICÍPIOS
+##-------------------------------------------
+#Mun = data.frame(
+#  cid = c('Florestal', 'Lajinha', 'Viçosa'), 
+#  cor = c('red', 'blue', 'orange'),
+#  Temp = c(23, 34, 40))
+
+
+#setwd("~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/MG")
+#Carregar o shapefile
+#library("rgdal");
+#pb_poligonos_rgdal <- readOGR(dsn=path.expand("~/GitHub/webpage/fsbmat.github.io/blog_posts/28-01-2017/MG"), layer="31MUE250GC_SIR", verbose=FALSE, stringsAsFactors=FALSE);
+```
+
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+#Separar os dados do shape num data frame
+pb_dados <- slot(object=pb_poligonos_rgdal, name="data");
+print( pb_dados[840:853, 1:2] );
+```
+
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+#Corrigindo o nome de Viçosa
+pb_dados$NM_MUNICIP[843]<-"VIÇOSA"
+#Criar uma lista com os nomes dos municípios de interesse
+lista_municipios <- c("FLORESTAL", "LAJINHA", "VIÇOSA");
+#Encontrar o indice numérico correspondente aos municípios desejados
+indice_numerico <- which( pb_dados$NM_MUNICIP %in% lista_municipios );
+print(indice_numerico);
+
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+#Pegar apenas as informações dos polígonos dos municípios desejados
+dados_municipio <- pb_poligonos_rgdal[indice_numerico, ];
+#Fazer o plot dos municípios desejados
+plot( dados_municipio, axes=TRUE, border="darkgrey", main="Poligonos dos municipios selecionados" );
+
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+#plotar os poligonos sobre o mapa de Minas
+plot( pb_poligonos_rgdal, axes=TRUE, border="darkgrey", main="Mapa de municipios do Estado de Minas Gerais \n com os municipios selecionados em destaque" );
+plot( dados_municipio, border="darkgray", col="red", add=TRUE );
+```
+
+```{r,echo=TRUE,warning=FALSE,message=FALSE,fig.align='center'}
+#Poligono de Florestal
+mun_florestal <- pb_poligonos_rgdal[indice_numerico[1], ]
+plot(mun_florestal, axes=TRUE, border="darkgrey", main= "Poligono de Florestal" )
+
+```
