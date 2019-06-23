@@ -1,4 +1,4 @@
-﻿# --- General options --- #
+# --- General options --- #
 #encoding: UTF-8
 # url is the full website URL
 # baseurl is the website's URL without the hostname
@@ -17,7 +17,7 @@ baseurl: ""
 title: Fernando Bastos Blog
 
 # Short description of your site
-description: Página para divulgar idéias e interesses pessoais!
+description: Página para divulgar idéias, disciplinas, projetos e interesses pessoais!
 
 # --- Navigation bar options --- #
 
